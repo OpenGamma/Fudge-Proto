@@ -630,7 +630,7 @@ import org.fudgemsg.proto.LiteralValue.IntegerValue;
       writer.write("if ((" + fieldRef + ".flags & FUDGE_FIELD_HAS_ORDINAL) && (" + fieldRef + ".ordinal == "
           + getIdentifier(field.getOuterMessage()) + "_" + field.getName() + "_Ordinal))");
     } else {
-      writer.write("if (0 /* TODO: test field name */)");
+      writer.write("if (!FudgeString_compare (fieldName, " + fieldRef + ".name))");
     }
   }
 

@@ -58,7 +58,7 @@ import org.fudgemsg.proto.antlr.ProtoLexer;
       final String fullID = sb.toString ();
       try {
         final Source src = codePosition.getSource ().findSource (fullID);
-        if (src != null) {
+        if ((src != null) && !codePosition.getSource().equals(src)) {
           context.addSource (src);
           return fullID;
         }
