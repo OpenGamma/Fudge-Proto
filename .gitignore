@@ -13,6 +13,5 @@ tests/out_default/
 tests/out_proto/
 tests/out_Java/
 tests/output/
-/.fudge-proto-gitignore
 /MANIFEST.MF
 build.number
