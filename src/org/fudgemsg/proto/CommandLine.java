@@ -90,7 +90,8 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
       final int ext = stem.length ();
       stem.append (".proto");
       final File f = new File (dir, stem.toString ());
-      if (f.exists ()) return new SourceFile (stem.toString (), f, this, compilationTarget);
+      // NOTE: jim 21-Mar-2011 -- Changed to make stem use only UNIX style paths in display name so output format regular.
+      if (f.exists ()) return new SourceFile (stem.toString().replace('\\', '/'), f, this, compilationTarget);
       stem.delete (ext, ext + 6);
     }
     return null;
@@ -247,6 +248,8 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
               displayName = displayName.substring (pfx.length ());
             }
           }
+          // make sure paths appear in UNIX form so we don't get different output on Windows and UNIX.
+          displayName = displayName.replace('\\', '/');
           compiler.addSource (new SourceFile (displayName, f, cmdLine, true));
         } else {
           cmdLine.compilerError (null, "source file '" + args[i] + "' doesn't exist");
