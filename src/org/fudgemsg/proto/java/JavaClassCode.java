@@ -58,6 +58,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_FUDGEFIELDCONTAINER = org.fudgemsg.FudgeFieldContainer.class.getName();
   private static final String CLASS_MUTABLEFUDGEFIELDCONTAINER = org.fudgemsg.MutableFudgeFieldContainer.class
       .getName();
+  private static final String CLASS_IMMUTABLEFUDGEFIELDCONTAINER = org.fudgemsg.ImmutableFudgeFieldContainer.class
+      .getName();
   private static final String CLASS_MAPFUDGETAXONOMY = org.fudgemsg.taxon.MapFudgeTaxonomy.class.getName();
   private static final String CLASS_ARRAYLIST = java.util.ArrayList.class.getName();
   private static final String CLASS_FUDGEMESSAGEFACTORY = org.fudgemsg.FudgeMessageFactory.class.getName();
@@ -982,7 +984,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           value = temp1;
         } else if (type instanceof FieldType.MessageType) {
           if (type instanceof FieldType.AnonMessageType) {
-            value = "fudgeContext.newMessage (" + value + ")";
+            value = "(" + value + " instanceof " + CLASS_IMMUTABLEFUDGEFIELDCONTAINER + ") ? " + value
+                + " : fudgeContext.newMessage (" + value + ")";
           } else {
             final MessageDefinition messageDefinition = ((FieldType.MessageType) type).getMessageDefinition();
             if (messageDefinition.isExternal()) {
@@ -1284,13 +1287,17 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
               + listTypeString(message, baseType, true) + " ()");
           endStmt(writer);
           final String msgElement = writer.forEach(CLASS_FUDGEFIELD, subMessage);
-          writer.ifBool(msgElement + ".getType() != " + CLASS_INDICATORTYPE + ".INSTANCE");
-          writer = beginBlock(writer); // if
-          writeDecodeFudgeField(writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList
-              + ".add", true);
-          writer = endBlock(writer); // if
-          writer.getWriter().write("else " + slaveList + ".add (null)");
-          endStmt(writer);
+          if (baseType.getFudgeFieldType() == FudgeTypeDictionary.INDICATOR_TYPE_ID) {
+            writer.getWriter().write(slaveList + ".add (Boolean.TRUE)");
+          } else {
+            writer.ifBool(msgElement + ".getType() != " + CLASS_INDICATORTYPE + ".INSTANCE");
+            writer = beginBlock(writer); // if
+            writeDecodeFudgeField(writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList
+                + ".add", true);
+            writer = endBlock(writer); // if
+            writer.getWriter().write("else " + slaveList + ".add (null)");
+          }
+          endStmt(writer); // for
           if (appendTo != null) {
             if (checkLength) {
               writer.ifSizeNot(slaveList, "size ()", arrayType.getFixedLength());
