@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.fudgemsg.FudgeTypeDictionary;
-import org.fudgemsg.UTF8;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.EnumDefinition;
 import org.fudgemsg.proto.FieldDefinition;
@@ -35,6 +34,7 @@ import org.fudgemsg.proto.TaxonomyDefinition;
 import org.fudgemsg.proto.TypeDefinition;
 import org.fudgemsg.proto.EnumDefinition.Type;
 import org.fudgemsg.proto.LiteralValue.IntegerValue;
+import org.fudgemsg.wire.UTF8;
 
 /**
  * Code generator for the C Fudge implementation
