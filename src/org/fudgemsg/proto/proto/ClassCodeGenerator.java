@@ -28,7 +28,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.fudgemsg.FudgeRuntimeIOException;
 import org.fudgemsg.proto.CodeGenerator;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.Definition;
@@ -38,6 +37,7 @@ import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
 import org.fudgemsg.proto.TypeDefinition;
+import org.fudgemsg.wire.FudgeRuntimeIOException;
 
 /**
  * Implementation of a code generator for languages that have class, struct or message constructs. The main work
