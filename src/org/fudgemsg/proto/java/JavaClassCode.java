@@ -73,7 +73,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
   private static final String CLASS_LISTITERATOR = java.util.ListIterator.class.getName();
   private static final String CLASS_FUDGEFIELD = org.fudgemsg.FudgeField.class.getName();
   private static final String CLASS_INDICATOR = org.fudgemsg.types.IndicatorType.class.getName();
-  private static final String CLASS_INDICATORTYPE = org.fudgemsg.types.IndicatorFieldType.class.getName();
+  private static final String CLASS_FUDGE_WIRE_TYPE = org.fudgemsg.wire.types.FudgeWireType.class.getName();
   private static final String CLASS_TOSTRINGBUILDER = org.apache.commons.lang.builder.ToStringBuilder.class.getName();
   private static final String CLASS_TOSTRINGSTYLE = org.apache.commons.lang.builder.ToStringStyle.class.getName();
   private static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName();
@@ -1290,7 +1290,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           if (baseType.getFudgeFieldType() == FudgeTypeDictionary.INDICATOR_TYPE_ID) {
             writer.getWriter().write(slaveList + ".add (Boolean.TRUE)");
           } else {
-            writer.ifBool(msgElement + ".getType() != " + CLASS_INDICATORTYPE + ".INSTANCE");
+            writer.ifBool(msgElement + ".getType() != " + CLASS_FUDGE_WIRE_TYPE + ".INDICATOR");
             writer = beginBlock(writer); // if
             writeDecodeFudgeField(writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList
                 + ".add", true);
