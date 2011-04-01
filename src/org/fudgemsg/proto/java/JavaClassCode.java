@@ -62,7 +62,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       .getName();
   private static final String CLASS_MAPFUDGETAXONOMY = org.fudgemsg.taxon.MapFudgeTaxonomy.class.getName();
   private static final String CLASS_ARRAYLIST = java.util.ArrayList.class.getName();
-  private static final String CLASS_FUDGEMESSAGEFACTORY = org.fudgemsg.FudgeMessageFactory.class.getName();
+  private static final String CLASS_FUDGEMESSAGEFACTORY = org.fudgemsg.FudgeMsgFactory.class.getName();
   private static final String CLASS_FUDGEDESERIALISATIONCONTEXT = org.fudgemsg.mapping.FudgeDeserializationContext.class
       .getName();
   private static final String CLASS_FUDGESERIALISATIONCONTEXT = org.fudgemsg.mapping.FudgeSerializationContext.class
