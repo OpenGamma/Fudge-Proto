@@ -277,7 +277,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
   }
   
   public static boolean checkPackages () {
-    return checkPackage ("org.antlr.runtime.Parser", "antlr3") && checkPackage ("org.fudgemsg.FudgeMsg", "fudge-java");
+    return checkPackage ("org.antlr.runtime.Parser", "antlr3") && checkPackage ("org.fudgemsg.StandardFudgeMsg", "fudge-java");
   }
     
   /**
