@@ -50,7 +50,7 @@ public class ZipSourceFile extends AbstractSource {
     if (o == this) return true;
     if (!(o instanceof ZipSourceFile)) return false;
     final ZipSourceFile jsf = (ZipSourceFile)o;
-    return jsf.getZipFile ().equals (getZipFile ()) && jsf.getZipEntry ().equals (getZipEntry ());
+    return jsf.getZipFile().getName().equals(getZipFile().getName()) && jsf.getZipEntry().getName().equals(getZipEntry().getName());
   }
 
   @Override
