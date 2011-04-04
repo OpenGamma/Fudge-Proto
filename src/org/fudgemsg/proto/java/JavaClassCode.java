@@ -984,7 +984,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           } else {
             final MessageDefinition messageDefinition = ((FieldType.MessageType) type).getMessageDefinition();
             if (messageDefinition.isExternal()) {
-              writer.invoke("fudgeContext", "objectToFudgeMsgWithClassHeaders", msg + ", " + name + ", " + ordinal
+              writer.invoke("fudgeContext", "addToMessageWithClassHeaders", msg + ", " + name + ", " + ordinal
                   + ", " + value + ", " + messageDefinition.getIdentifier() + ".class");
               endStmt(writer);
               return;
@@ -999,7 +999,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
             }
           }
         } else if (type instanceof FieldType.UserType) {
-          writer.invoke("fudgeContext", "objectToFudgeMsg", msg + ", " + name + ", " + ordinal + ", " + value);
+          writer.invoke("fudgeContext", "addToMessage", msg + ", " + name + ", " + ordinal + ", " + value);
           endStmt(writer);
           return;
         } else {
