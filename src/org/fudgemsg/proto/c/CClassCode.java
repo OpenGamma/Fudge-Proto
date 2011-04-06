@@ -118,7 +118,7 @@ import org.fudgemsg.wire.UTF8;
         writer.write("#define " + getIdentifier(message) + "_set" + camelCaseFieldName(field) + " "
             + getIdentifier(field.getOuterMessage()) + "_set" + camelCaseFieldName(field));
         writer.newLine();
-        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
           writer.write("#define " + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field) + " "
               + getIdentifier(field.getOuterMessage()) + "_getFudgeMsg" + camelCaseFieldName(field));
           writer.newLine();
@@ -143,7 +143,7 @@ import org.fudgemsg.wire.UTF8;
         }
         writer.write(")");
         endStmt(writer);
-        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
           writer.write("FudgeStatus " + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field)
               + " (FudgeMsg msg, FudgeMsg *subMsg)");
           endStmt(writer);
@@ -202,7 +202,7 @@ import org.fudgemsg.wire.UTF8;
         writer.write("#define " + message.getName() + "_set" + camelCaseFieldName(field) + " " + getIdentifier(message)
             + "_set" + camelCaseFieldName(field));
         writer.newLine();
-        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
           writer.write("#define " + message.getName() + "_getFudgeMsg" + camelCaseFieldName(field) + " "
               + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field));
           writer.newLine();
@@ -488,7 +488,7 @@ import org.fudgemsg.wire.UTF8;
         case FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_DOUBLE_ARRAY", "fudge_f64", unwind);
           break;
-        case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
+        case FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID:
           final String cType = typeString(arrayType.getBaseType(), false);
           final String varI = "i" + unwind.size();
           final String varN = "n" + unwind.size();
@@ -932,7 +932,7 @@ import org.fudgemsg.wire.UTF8;
           value = withArrayLength(writer, value, arrayDepth);
           type = "F64Array";
           break;
-        case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
+        case FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID:
           writer.write("if ((status = FudgeMsg_create (&arrMsg" + arrayDepth + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           unwind.push("FudgeMsg_release (arrMsg" + arrayDepth + ")");
@@ -1041,7 +1041,7 @@ import org.fudgemsg.wire.UTF8;
         case FudgeTypeDictionary.BYTE_ARR_512_TYPE_ID:
           // No additional variables needed
           break;
-        case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
+        case FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID:
           writer.write("FudgeMsg arrMsg" + count);
           endStmt(writer);
           writer.write("int n" + count);
@@ -1182,11 +1182,11 @@ import org.fudgemsg.wire.UTF8;
       return;
     }
     writeAccessor(writer, field);
-    if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+    if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
       writeSubMessageAccessor(writer, field);
     }
     writeMutator(writer, field);
-    if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID) {
+    if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
       writeSubMessageMutator(writer, field);
     }
   }

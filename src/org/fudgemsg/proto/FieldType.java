@@ -114,13 +114,13 @@ public abstract class FieldType {
         if (_arrayOf == null) {
           synchronized (this) {
             if (_arrayOf == null) {
-              _arrayOf = new SimpleArrayType (FudgeTypeDictionary.FUDGE_MSG_TYPE_ID, this, null);
+              _arrayOf = new SimpleArrayType (FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID, this, null);
             }
           }
         }
         return _arrayOf;
       } else {
-        return new SimpleArrayType (FudgeTypeDictionary.FUDGE_MSG_TYPE_ID, this, length);
+        return new SimpleArrayType (FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID, this, length);
       }
     }
 
@@ -258,7 +258,7 @@ public abstract class FieldType {
 
     @Override
     public int getFudgeFieldType() {
-      return FudgeTypeDictionary.FUDGE_MSG_TYPE_ID;
+      return FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID;
     }
     
   }
@@ -325,7 +325,7 @@ public abstract class FieldType {
           if (_enumDefinition.getType () == EnumDefinition.Type.INTEGER_ENCODED) {
             return FudgeTypeDictionary.INT_ARRAY_TYPE_ID;
           } else {
-            return FudgeTypeDictionary.FUDGE_MSG_TYPE_ID;
+            return FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID;
           }
         }
       };      

@@ -243,7 +243,7 @@ public abstract class MessageDefinition extends Definition {
       final TypeDefinition typedef = ((FieldType.UserType) type).getTypeDefinition();
       final FieldType underlying = typedef.getUnderlyingType();
       if (typedef.isExternal()) {
-        return underlying.getFudgeFieldType() == FudgeTypeDictionary.FUDGE_MSG_TYPE_ID;
+        return underlying.getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID;
       } else {
         return hasExternalMessageReferences(underlying, considered);
       }

@@ -954,7 +954,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           value = value + ".name ()";
         }
         break;
-      case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
+      case FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID:
         if (type instanceof FieldType.ArrayType) {
           final String temp1 = writer.localVariable(CLASS_MUTABLEFUDGEMSG, true,
               "fudgeContext.newMessage ()");
@@ -1272,7 +1272,7 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
           assignTo = writeDecodeSimpleFudgeField(writer, "double[]", fieldData, fieldRef, fieldContainer,
               assignTo, appendTo, null);
           break;
-        case FudgeTypeDictionary.FUDGE_MSG_TYPE_ID:
+        case FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID:
           // arbitrary array
           final String subMessage = writer.localVariable(CLASS_FUDGEMSG, true, fudgeFieldValueExpression(
               fieldContainer, CLASS_FUDGEMSG, fieldData));
