@@ -20,7 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.fudgemsg.FudgeTypeDictionary;
+import org.fudgemsg.wire.types.FudgeWireType;
 
 /**
  * Semantic representation of a message.
@@ -243,7 +243,7 @@ public abstract class MessageDefinition extends Definition {
       final TypeDefinition typedef = ((FieldType.UserType) type).getTypeDefinition();
       final FieldType underlying = typedef.getUnderlyingType();
       if (typedef.isExternal()) {
-        return underlying.getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID;
+        return underlying.getFudgeFieldType() == FudgeWireType.SUB_MESSAGE_TYPE_ID;
       } else {
         return hasExternalMessageReferences(underlying, considered);
       }

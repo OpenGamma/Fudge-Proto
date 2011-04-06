@@ -19,9 +19,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.Compiler.Context;
 import org.fudgemsg.proto.antlr.ProtoLexer;
+import org.fudgemsg.wire.types.FudgeWireType;
 
 /**
  * Representation of a literal value, e.g. a default value for a field.
@@ -68,21 +68,21 @@ public abstract class LiteralValue {
         return null;
       }
       switch (fieldType.getFudgeFieldType ()) {
-        case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
+        case FudgeWireType.BOOLEAN_TYPE_ID:
           return new BooleanValue(getCodePosition(), (getNumber().doubleValue() != 0));
-        case FudgeTypeDictionary.BYTE_TYPE_ID:
+        case FudgeWireType.BYTE_TYPE_ID:
           return longCastRange(context, Byte.MIN_VALUE, Byte.MAX_VALUE);
-        case FudgeTypeDictionary.SHORT_TYPE_ID:
+        case FudgeWireType.SHORT_TYPE_ID:
           return longCastRange(context, Short.MIN_VALUE, Short.MAX_VALUE);
-        case FudgeTypeDictionary.INT_TYPE_ID:
+        case FudgeWireType.INT_TYPE_ID:
           return longCastRange(context, Integer.MIN_VALUE, Integer.MAX_VALUE);
-        case FudgeTypeDictionary.LONG_TYPE_ID:
+        case FudgeWireType.LONG_TYPE_ID:
           return longCastRange(context, Long.MIN_VALUE, Long.MAX_VALUE);
-        case FudgeTypeDictionary.FLOAT_TYPE_ID:
+        case FudgeWireType.FLOAT_TYPE_ID:
           return floatCast(context);
-        case FudgeTypeDictionary.DOUBLE_TYPE_ID:
+        case FudgeWireType.DOUBLE_TYPE_ID:
           return doubleCast(context);
-        case FudgeTypeDictionary.STRING_TYPE_ID:
+        case FudgeWireType.STRING_TYPE_ID:
           return new StringValue(getCodePosition(), getNumber().toString());
         default:
           context.error(getCodePosition(), "invalid default value for type '" + fieldType + "'");
@@ -258,7 +258,7 @@ public abstract class LiteralValue {
     
     @Override
     public LiteralValue assignmentTo (final Compiler.Context context, final FieldType fieldType) {
-      if (fieldType.getFudgeFieldType () != FudgeTypeDictionary.STRING_TYPE_ID) {
+      if (fieldType.getFudgeFieldType () != FudgeWireType.STRING_TYPE_ID) {
         context.error (getCodePosition (), "invalid default value for type '" + fieldType + "'");
         return null;
       }
@@ -312,7 +312,7 @@ public abstract class LiteralValue {
           return null;
         }
         return new EnumValue (this, enumDefinition);
-      } else if (fieldType.getFudgeFieldType() == FudgeTypeDictionary.BOOLEAN_TYPE_ID) {
+      } else if (fieldType.getFudgeFieldType() == FudgeWireType.BOOLEAN_TYPE_ID) {
         if ("false".equalsIgnoreCase(_value) || "f".equalsIgnoreCase(_value)) {
           return new BooleanValue(getCodePosition(), false);
         } else if ("true".equalsIgnoreCase(_value) || "t".equalsIgnoreCase(_value)) {
@@ -341,7 +341,7 @@ public abstract class LiteralValue {
 
     @Override
     public LiteralValue assignmentTo(Context context, FieldType fieldType) {
-      if (fieldType.getFudgeFieldType() != FudgeTypeDictionary.BOOLEAN_TYPE_ID) {
+      if (fieldType.getFudgeFieldType() != FudgeWireType.BOOLEAN_TYPE_ID) {
         context.error(getCodePosition(), "invalid default value for type '" + fieldType + "'");
         return null;
       }

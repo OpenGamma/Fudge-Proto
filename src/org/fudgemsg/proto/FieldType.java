@@ -15,7 +15,7 @@
 
 package org.fudgemsg.proto;
 
-import org.fudgemsg.FudgeTypeDictionary;
+import org.fudgemsg.wire.types.FudgeWireType;
 
 /**
  * Internal representation of a field type.
@@ -58,16 +58,16 @@ public abstract class FieldType {
    */
   private static class FudgeByteType extends FieldType {
     
-    private final ArrayType ARRAY_VARIABLE = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARRAY_TYPE_ID, this, null);
-    private final ArrayType ARRAY_LENGTH_4 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_4_TYPE_ID, this, 4);
-    private final ArrayType ARRAY_LENGTH_8 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_8_TYPE_ID, this, 8);
-    private final ArrayType ARRAY_LENGTH_16 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_16_TYPE_ID, this, 16);
-    private final ArrayType ARRAY_LENGTH_20 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_20_TYPE_ID, this, 20);
-    private final ArrayType ARRAY_LENGTH_32 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_32_TYPE_ID, this, 32);
-    private final ArrayType ARRAY_LENGTH_64 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_64_TYPE_ID, this, 64);
-    private final ArrayType ARRAY_LENGTH_128 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_128_TYPE_ID, this, 128);
-    private final ArrayType ARRAY_LENGTH_256 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_256_TYPE_ID, this, 256);
-    private final ArrayType ARRAY_LENGTH_512 = new SimpleArrayType (FudgeTypeDictionary.BYTE_ARR_512_TYPE_ID, this, 512);
+    private final ArrayType ARRAY_VARIABLE = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_TYPE_ID, this, null);
+    private final ArrayType ARRAY_LENGTH_4 = new SimpleArrayType (FudgeWireType.BYTE_ARR_4_TYPE_ID, this, 4);
+    private final ArrayType ARRAY_LENGTH_8 = new SimpleArrayType (FudgeWireType.BYTE_ARR_8_TYPE_ID, this, 8);
+    private final ArrayType ARRAY_LENGTH_16 = new SimpleArrayType (FudgeWireType.BYTE_ARR_16_TYPE_ID, this, 16);
+    private final ArrayType ARRAY_LENGTH_20 = new SimpleArrayType (FudgeWireType.BYTE_ARR_20_TYPE_ID, this, 20);
+    private final ArrayType ARRAY_LENGTH_32 = new SimpleArrayType (FudgeWireType.BYTE_ARR_32_TYPE_ID, this, 32);
+    private final ArrayType ARRAY_LENGTH_64 = new SimpleArrayType (FudgeWireType.BYTE_ARR_64_TYPE_ID, this, 64);
+    private final ArrayType ARRAY_LENGTH_128 = new SimpleArrayType (FudgeWireType.BYTE_ARR_128_TYPE_ID, this, 128);
+    private final ArrayType ARRAY_LENGTH_256 = new SimpleArrayType (FudgeWireType.BYTE_ARR_256_TYPE_ID, this, 256);
+    private final ArrayType ARRAY_LENGTH_512 = new SimpleArrayType (FudgeWireType.BYTE_ARR_512_TYPE_ID, this, 512);
     
     private FudgeByteType () {
       super ("byte");
@@ -87,13 +87,13 @@ public abstract class FieldType {
       case 128 : return ARRAY_LENGTH_128;
       case 256 : return ARRAY_LENGTH_256;
       case 512 : return ARRAY_LENGTH_512;
-      default : return new SimpleArrayType (FudgeTypeDictionary.BYTE_TYPE_ID, this, length);
+      default : return new SimpleArrayType (FudgeWireType.BYTE_TYPE_ID, this, length);
       }
     }
 
     @Override
     public int getFudgeFieldType() {
-      return FudgeTypeDictionary.BYTE_TYPE_ID;
+      return FudgeWireType.BYTE_TYPE_ID;
     }
     
   }
@@ -114,13 +114,13 @@ public abstract class FieldType {
         if (_arrayOf == null) {
           synchronized (this) {
             if (_arrayOf == null) {
-              _arrayOf = new SimpleArrayType (FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID, this, null);
+              _arrayOf = new SimpleArrayType (FudgeWireType.SUB_MESSAGE_TYPE_ID, this, null);
             }
           }
         }
         return _arrayOf;
       } else {
-        return new SimpleArrayType (FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID, this, length);
+        return new SimpleArrayType (FudgeWireType.SUB_MESSAGE_TYPE_ID, this, length);
       }
     }
 
@@ -258,7 +258,7 @@ public abstract class FieldType {
 
     @Override
     public int getFudgeFieldType() {
-      return FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID;
+      return FudgeWireType.SUB_MESSAGE_TYPE_ID;
     }
     
   }
@@ -304,9 +304,9 @@ public abstract class FieldType {
     
     public int getFudgeFieldType () {
       if (_enumDefinition.getType () == EnumDefinition.Type.INTEGER_ENCODED) {
-        return FudgeTypeDictionary.INT_TYPE_ID;
+        return FudgeWireType.INT_TYPE_ID;
       } else {
-        return FudgeTypeDictionary.STRING_TYPE_ID;
+        return FudgeWireType.STRING_TYPE_ID;
       }
     }
     
@@ -323,9 +323,9 @@ public abstract class FieldType {
         @Override
         public int getFudgeFieldType() {
           if (_enumDefinition.getType () == EnumDefinition.Type.INTEGER_ENCODED) {
-            return FudgeTypeDictionary.INT_ARRAY_TYPE_ID;
+            return FudgeWireType.INT_ARRAY_TYPE_ID;
           } else {
-            return FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID;
+            return FudgeWireType.SUB_MESSAGE_TYPE_ID;
           }
         }
       };      
@@ -393,17 +393,17 @@ public abstract class FieldType {
   
   // The basic Fudge types
   
-  public static final FieldType INDICATOR_TYPE = new SimpleNonFudgeArrayable ("indicator", FudgeTypeDictionary.INDICATOR_TYPE_ID);
-  public static final FieldType BOOLEAN_TYPE = new SimpleNonFudgeArrayable ("boolean", FudgeTypeDictionary.BOOLEAN_TYPE_ID);
+  public static final FieldType INDICATOR_TYPE = new SimpleNonFudgeArrayable ("indicator", FudgeWireType.INDICATOR_TYPE_ID);
+  public static final FieldType BOOLEAN_TYPE = new SimpleNonFudgeArrayable ("boolean", FudgeWireType.BOOLEAN_TYPE_ID);
   public static final FieldType BYTE_TYPE = new FudgeByteType ();
-  public static final FieldType SHORT_TYPE = new FudgeArrayable ("short", FudgeTypeDictionary.SHORT_TYPE_ID, FudgeTypeDictionary.SHORT_ARRAY_TYPE_ID);
-  public static final FieldType INT_TYPE = new FudgeArrayable ("integer", FudgeTypeDictionary.INT_TYPE_ID, FudgeTypeDictionary.INT_ARRAY_TYPE_ID);
-  public static final FieldType LONG_TYPE = new FudgeArrayable ("long", FudgeTypeDictionary.LONG_TYPE_ID, FudgeTypeDictionary.LONG_ARRAY_TYPE_ID);
-  public static final FieldType FLOAT_TYPE = new FudgeArrayable ("float", FudgeTypeDictionary.FLOAT_TYPE_ID, FudgeTypeDictionary.FLOAT_ARRAY_TYPE_ID);
-  public static final FieldType DOUBLE_TYPE = new FudgeArrayable ("double", FudgeTypeDictionary.DOUBLE_TYPE_ID, FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID);
-  public static final FieldType STRING_TYPE = new SimpleNonFudgeArrayable ("string", FudgeTypeDictionary.STRING_TYPE_ID);
-  public static final FieldType DATE_TYPE = new SimpleNonFudgeArrayable ("date", FudgeTypeDictionary.DATE_TYPE_ID);
-  public static final FieldType DATETIME_TYPE = new SimpleNonFudgeArrayable ("datetime", FudgeTypeDictionary.DATETIME_TYPE_ID);
-  public static final FieldType TIME_TYPE = new SimpleNonFudgeArrayable ("time", FudgeTypeDictionary.TIME_TYPE_ID);
+  public static final FieldType SHORT_TYPE = new FudgeArrayable ("short", FudgeWireType.SHORT_TYPE_ID, FudgeWireType.SHORT_ARRAY_TYPE_ID);
+  public static final FieldType INT_TYPE = new FudgeArrayable ("integer", FudgeWireType.INT_TYPE_ID, FudgeWireType.INT_ARRAY_TYPE_ID);
+  public static final FieldType LONG_TYPE = new FudgeArrayable ("long", FudgeWireType.LONG_TYPE_ID, FudgeWireType.LONG_ARRAY_TYPE_ID);
+  public static final FieldType FLOAT_TYPE = new FudgeArrayable ("float", FudgeWireType.FLOAT_TYPE_ID, FudgeWireType.FLOAT_ARRAY_TYPE_ID);
+  public static final FieldType DOUBLE_TYPE = new FudgeArrayable ("double", FudgeWireType.DOUBLE_TYPE_ID, FudgeWireType.DOUBLE_ARRAY_TYPE_ID);
+  public static final FieldType STRING_TYPE = new SimpleNonFudgeArrayable ("string", FudgeWireType.STRING_TYPE_ID);
+  public static final FieldType DATE_TYPE = new SimpleNonFudgeArrayable ("date", FudgeWireType.DATE_TYPE_ID);
+  public static final FieldType DATETIME_TYPE = new SimpleNonFudgeArrayable ("datetime", FudgeWireType.DATETIME_TYPE_ID);
+  public static final FieldType TIME_TYPE = new SimpleNonFudgeArrayable ("time", FudgeWireType.TIME_TYPE_ID);
   
 }

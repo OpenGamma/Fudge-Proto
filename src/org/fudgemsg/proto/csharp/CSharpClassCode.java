@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.CodeGeneratorUtil;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.Definition;
@@ -36,6 +35,7 @@ import org.fudgemsg.proto.TaxonomyDefinition;
 import org.fudgemsg.proto.c.CBlockCode;
 import org.fudgemsg.proto.proto.DocumentedClassCode;
 import org.fudgemsg.proto.proto.HeaderlessClassCode;
+import org.fudgemsg.wire.types.FudgeWireType;
 
 /**
  * Code generator for the C# Fudge implementation. NOT FINISHED.
@@ -168,29 +168,29 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
       return ((FieldType.UserType) type).getTypeDefinition().getIdentifier();
     } else {
       switch (type.getFudgeFieldType ()) {
-      case FudgeTypeDictionary.INDICATOR_TYPE_ID :
+      case FudgeWireType.INDICATOR_TYPE_ID :
         return "bool";
-      case FudgeTypeDictionary.BOOLEAN_TYPE_ID :
+      case FudgeWireType.BOOLEAN_TYPE_ID :
         return "bool";
-      case FudgeTypeDictionary.BYTE_TYPE_ID :
+      case FudgeWireType.BYTE_TYPE_ID :
         return "sbyte";
-      case FudgeTypeDictionary.SHORT_TYPE_ID :
+      case FudgeWireType.SHORT_TYPE_ID :
         return "short";
-      case FudgeTypeDictionary.INT_TYPE_ID :
+      case FudgeWireType.INT_TYPE_ID :
         return "int";
-      case FudgeTypeDictionary.LONG_TYPE_ID :
+      case FudgeWireType.LONG_TYPE_ID :
         return "long";
-      case FudgeTypeDictionary.FLOAT_TYPE_ID :
+      case FudgeWireType.FLOAT_TYPE_ID :
         return "float";
-      case FudgeTypeDictionary.DOUBLE_TYPE_ID :
+      case FudgeWireType.DOUBLE_TYPE_ID :
         return "double";
-      case FudgeTypeDictionary.STRING_TYPE_ID :
+      case FudgeWireType.STRING_TYPE_ID :
         return "String";
-      case FudgeTypeDictionary.DATE_TYPE_ID :
+      case FudgeWireType.DATE_TYPE_ID :
         return "FudgeDate";
-      case FudgeTypeDictionary.DATETIME_TYPE_ID :
+      case FudgeWireType.DATETIME_TYPE_ID :
         return "DateTime";
-      case FudgeTypeDictionary.TIME_TYPE_ID :
+      case FudgeWireType.TIME_TYPE_ID :
         return "FudgeTime";
       default :
         throw new IllegalStateException ("type '" + type + "' is not an expected type (fudge field type " + type.getFudgeFieldType () + ")");
@@ -242,8 +242,8 @@ import org.fudgemsg.proto.proto.HeaderlessClassCode;
         writer.write ("if (" + name + " != null) hc += " + name + ".GetHashCode ()");
       } else {
         switch (type.getFudgeFieldType ()) {
-        case FudgeTypeDictionary.BOOLEAN_TYPE_ID :
-        case FudgeTypeDictionary.INDICATOR_TYPE_ID :
+        case FudgeWireType.BOOLEAN_TYPE_ID :
+        case FudgeWireType.INDICATOR_TYPE_ID :
           writer.write ("if (" + name + ") hc++");
           break;
         default :

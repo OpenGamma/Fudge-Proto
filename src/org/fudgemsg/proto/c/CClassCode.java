@@ -22,19 +22,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.Compiler;
 import org.fudgemsg.proto.EnumDefinition;
+import org.fudgemsg.proto.EnumDefinition.Type;
 import org.fudgemsg.proto.FieldDefinition;
 import org.fudgemsg.proto.FieldType;
 import org.fudgemsg.proto.IndentWriter;
 import org.fudgemsg.proto.LiteralValue;
+import org.fudgemsg.proto.LiteralValue.IntegerValue;
 import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
 import org.fudgemsg.proto.TypeDefinition;
-import org.fudgemsg.proto.EnumDefinition.Type;
-import org.fudgemsg.proto.LiteralValue.IntegerValue;
 import org.fudgemsg.wire.UTF8;
+import org.fudgemsg.wire.types.FudgeWireType;
 
 /**
  * Code generator for the C Fudge implementation
@@ -118,7 +118,7 @@ import org.fudgemsg.wire.UTF8;
         writer.write("#define " + getIdentifier(message) + "_set" + camelCaseFieldName(field) + " "
             + getIdentifier(field.getOuterMessage()) + "_set" + camelCaseFieldName(field));
         writer.newLine();
-        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
+        if (field.getType().getFudgeFieldType() == FudgeWireType.SUB_MESSAGE_TYPE_ID) {
           writer.write("#define " + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field) + " "
               + getIdentifier(field.getOuterMessage()) + "_getFudgeMsg" + camelCaseFieldName(field));
           writer.newLine();
@@ -143,7 +143,7 @@ import org.fudgemsg.wire.UTF8;
         }
         writer.write(")");
         endStmt(writer);
-        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
+        if (field.getType().getFudgeFieldType() == FudgeWireType.SUB_MESSAGE_TYPE_ID) {
           writer.write("FudgeStatus " + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field)
               + " (FudgeMsg msg, FudgeMsg *subMsg)");
           endStmt(writer);
@@ -202,7 +202,7 @@ import org.fudgemsg.wire.UTF8;
         writer.write("#define " + message.getName() + "_set" + camelCaseFieldName(field) + " " + getIdentifier(message)
             + "_set" + camelCaseFieldName(field));
         writer.newLine();
-        if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
+        if (field.getType().getFudgeFieldType() == FudgeWireType.SUB_MESSAGE_TYPE_ID) {
           writer.write("#define " + message.getName() + "_getFudgeMsg" + camelCaseFieldName(field) + " "
               + getIdentifier(message) + "_getFudgeMsg" + camelCaseFieldName(field));
           writer.newLine();
@@ -443,52 +443,52 @@ import org.fudgemsg.wire.UTF8;
     } else if (type instanceof FieldType.ArrayType) {
       final FieldType.ArrayType arrayType = (FieldType.ArrayType) type;
       switch (arrayType.getFudgeFieldType()) {
-        case FudgeTypeDictionary.BYTE_ARRAY_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_4_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_4_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_4", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_8_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_8_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_8", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_16_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_16_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_16", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_20_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_20_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_20", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_32_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_32_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_32", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_64_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_64_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_64", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_128_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_128_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_128", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_256_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_256_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_256", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.BYTE_ARR_512_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_512_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_512", "fudge_byte", unwind);
           break;
-        case FudgeTypeDictionary.INT_ARRAY_TYPE_ID:
+        case FudgeWireType.INT_ARRAY_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_INT_ARRAY", "fudge_i32", unwind);
           break;
-        case FudgeTypeDictionary.LONG_ARRAY_TYPE_ID:
+        case FudgeWireType.LONG_ARRAY_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_LONG_ARRAY", "fudge_i64", unwind);
           break;
-        case FudgeTypeDictionary.SHORT_ARRAY_TYPE_ID:
+        case FudgeWireType.SHORT_ARRAY_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_SHORT_ARRAY", "fudge_i16", unwind);
           break;
-        case FudgeTypeDictionary.FLOAT_ARRAY_TYPE_ID:
+        case FudgeWireType.FLOAT_ARRAY_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_FLOAT_ARRAY", "fudge_f32", unwind);
           break;
-        case FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID:
+        case FudgeWireType.DOUBLE_ARRAY_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_DOUBLE_ARRAY", "fudge_f64", unwind);
           break;
-        case FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID:
+        case FudgeWireType.SUB_MESSAGE_TYPE_ID:
           final String cType = typeString(arrayType.getBaseType(), false);
           final String varI = "i" + unwind.size();
           final String varN = "n" + unwind.size();
@@ -571,50 +571,50 @@ import org.fudgemsg.wire.UTF8;
       }
     } else {
       switch (type.getFudgeFieldType()) {
-        case FudgeTypeDictionary.INDICATOR_TYPE_ID:
+        case FudgeWireType.INDICATOR_TYPE_ID:
           // No code needed
           break;
-        case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
+        case FudgeWireType.BOOLEAN_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsBoolean (&" + source + ", " + target + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           break;
-        case FudgeTypeDictionary.BYTE_TYPE_ID:
+        case FudgeWireType.BYTE_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsByte (&" + source + ", " + target + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           break;
-        case FudgeTypeDictionary.SHORT_TYPE_ID:
+        case FudgeWireType.SHORT_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsI16 (&" + source + ", " + target + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           break;
-        case FudgeTypeDictionary.INT_TYPE_ID:
+        case FudgeWireType.INT_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsI32 (&" + source + ", " + target + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           break;
-        case FudgeTypeDictionary.LONG_TYPE_ID:
+        case FudgeWireType.LONG_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsI64 (&" + source + ", " + target + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           break;
-        case FudgeTypeDictionary.FLOAT_TYPE_ID:
+        case FudgeWireType.FLOAT_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsF32 (&" + source + ", " + target + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           break;
-        case FudgeTypeDictionary.DOUBLE_TYPE_ID:
+        case FudgeWireType.DOUBLE_TYPE_ID:
           writer.write("if ((status = FudgeMsg_getFieldAsF64 (&" + source + ", " + target + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           break;
-        case FudgeTypeDictionary.STRING_TYPE_ID:
+        case FudgeWireType.STRING_TYPE_ID:
           final String varLen = "len" + unwind.size();
           writer.write("size_t " + varLen);
           endStmt(writer);
           fieldValueToString(writer, source, "*" + target, unwind, allowNull, varLen);
           break;
-        case FudgeTypeDictionary.DATE_TYPE_ID:
+        case FudgeWireType.DATE_TYPE_ID:
           comment(writer, "TODO date type");
           break;
-        case FudgeTypeDictionary.DATETIME_TYPE_ID:
+        case FudgeWireType.DATETIME_TYPE_ID:
           comment(writer, "TODO datetime type");
           break;
-        case FudgeTypeDictionary.TIME_TYPE_ID:
+        case FudgeWireType.TIME_TYPE_ID:
           comment(writer, "TODO time type");
           break;
         default:
@@ -738,7 +738,7 @@ import org.fudgemsg.wire.UTF8;
         endStmt(writer);
       }
     } else {
-      if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.INDICATOR_TYPE_ID) {
+      if (field.getType().getFudgeFieldType() == FudgeWireType.INDICATOR_TYPE_ID) {
         writer.write("*value = (");
       } else {
         writer.write("if ((status = ");
@@ -751,7 +751,7 @@ import org.fudgemsg.wire.UTF8;
         writer.write("Name (&field, msg, fieldName");
       }
       writer.write(")");
-      if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.INDICATOR_TYPE_ID) {
+      if (field.getType().getFudgeFieldType() == FudgeWireType.INDICATOR_TYPE_ID) {
         writer.write(" == FUDGE_OK)");
         endStmt(writer);
       } else {
@@ -842,22 +842,22 @@ import org.fudgemsg.wire.UTF8;
       return value; // pointer
     } else {
       switch (type.getFudgeFieldType()) {
-        case FudgeTypeDictionary.INDICATOR_TYPE_ID:
-        case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_TYPE_ID:
-        case FudgeTypeDictionary.SHORT_TYPE_ID:
-        case FudgeTypeDictionary.INT_TYPE_ID:
-        case FudgeTypeDictionary.LONG_TYPE_ID:
-        case FudgeTypeDictionary.FLOAT_TYPE_ID:
-        case FudgeTypeDictionary.DOUBLE_TYPE_ID:
+        case FudgeWireType.INDICATOR_TYPE_ID:
+        case FudgeWireType.BOOLEAN_TYPE_ID:
+        case FudgeWireType.BYTE_TYPE_ID:
+        case FudgeWireType.SHORT_TYPE_ID:
+        case FudgeWireType.INT_TYPE_ID:
+        case FudgeWireType.LONG_TYPE_ID:
+        case FudgeWireType.FLOAT_TYPE_ID:
+        case FudgeWireType.DOUBLE_TYPE_ID:
           return value; // scalar
-        case FudgeTypeDictionary.STRING_TYPE_ID:
+        case FudgeWireType.STRING_TYPE_ID:
           return value; // pointer
-        case FudgeTypeDictionary.DATE_TYPE_ID:
+        case FudgeWireType.DATE_TYPE_ID:
           return value + ".year"; // no year 0; -1 = 1BC, 1 = 1AD
-        case FudgeTypeDictionary.DATETIME_TYPE_ID:
+        case FudgeWireType.DATETIME_TYPE_ID:
           return value + ".date.year"; // no year 0; -1 = 1BC, 1 = 1AD
-        case FudgeTypeDictionary.TIME_TYPE_ID:
+        case FudgeWireType.TIME_TYPE_ID:
           return value + ".precision"; // precision 0 not valid on a time alone
         default:
           throw new IllegalStateException("type '" + type + "' is not an expected type (fudge field type "
@@ -881,58 +881,58 @@ import org.fudgemsg.wire.UTF8;
       value = "subMsg";
     } else if (fieldType instanceof FieldType.ArrayType) {
       switch (fieldType.getFudgeFieldType()) {
-        case FudgeTypeDictionary.BYTE_ARRAY_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_TYPE_ID:
           value = withArrayLength(writer, value, arrayDepth);
           type = "ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_4_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_4_TYPE_ID:
           type = "4ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_8_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_8_TYPE_ID:
           type = "8ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_16_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_16_TYPE_ID:
           type = "16ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_20_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_20_TYPE_ID:
           type = "20ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_32_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_32_TYPE_ID:
           type = "32ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_64_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_64_TYPE_ID:
           type = "64ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_128_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_128_TYPE_ID:
           type = "128ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_256_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_256_TYPE_ID:
           type = "256ByteArray";
           break;
-        case FudgeTypeDictionary.BYTE_ARR_512_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_512_TYPE_ID:
           type = "512ByteArray";
           break;
-        case FudgeTypeDictionary.INT_ARRAY_TYPE_ID:
+        case FudgeWireType.INT_ARRAY_TYPE_ID:
           value = withArrayLength(writer, value, arrayDepth);
           type = "I32Array";
           break;
-        case FudgeTypeDictionary.LONG_ARRAY_TYPE_ID:
+        case FudgeWireType.LONG_ARRAY_TYPE_ID:
           value = withArrayLength(writer, value, arrayDepth);
           type = "I64Array";
           break;
-        case FudgeTypeDictionary.SHORT_ARRAY_TYPE_ID:
+        case FudgeWireType.SHORT_ARRAY_TYPE_ID:
           value = withArrayLength(writer, value, arrayDepth);
           type = "I16Array";
           break;
-        case FudgeTypeDictionary.FLOAT_ARRAY_TYPE_ID:
+        case FudgeWireType.FLOAT_ARRAY_TYPE_ID:
           value = withArrayLength(writer, value, arrayDepth);
           type = "F32Array";
           break;
-        case FudgeTypeDictionary.DOUBLE_ARRAY_TYPE_ID:
+        case FudgeWireType.DOUBLE_ARRAY_TYPE_ID:
           value = withArrayLength(writer, value, arrayDepth);
           type = "F64Array";
           break;
-        case FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID:
+        case FudgeWireType.SUB_MESSAGE_TYPE_ID:
           writer.write("if ((status = FudgeMsg_create (&arrMsg" + arrayDepth + ")) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
           unwind.push("FudgeMsg_release (arrMsg" + arrayDepth + ")");
@@ -960,33 +960,33 @@ import org.fudgemsg.wire.UTF8;
       }
     } else {
       switch (fieldType.getFudgeFieldType()) {
-        case FudgeTypeDictionary.INDICATOR_TYPE_ID:
+        case FudgeWireType.INDICATOR_TYPE_ID:
           writer.write("if (value) ");
           type = "Indicator";
           value = null;
           break;
-        case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
+        case FudgeWireType.BOOLEAN_TYPE_ID:
           type = "Bool";
           break;
-        case FudgeTypeDictionary.BYTE_TYPE_ID:
+        case FudgeWireType.BYTE_TYPE_ID:
           type = "Byte";
           break;
-        case FudgeTypeDictionary.SHORT_TYPE_ID:
+        case FudgeWireType.SHORT_TYPE_ID:
           type = "I16";
           break;
-        case FudgeTypeDictionary.INT_TYPE_ID:
+        case FudgeWireType.INT_TYPE_ID:
           type = "I32";
           break;
-        case FudgeTypeDictionary.LONG_TYPE_ID:
+        case FudgeWireType.LONG_TYPE_ID:
           type = "I64";
           break;
-        case FudgeTypeDictionary.FLOAT_TYPE_ID:
+        case FudgeWireType.FLOAT_TYPE_ID:
           type = "F32";
           break;
-        case FudgeTypeDictionary.DOUBLE_TYPE_ID:
+        case FudgeWireType.DOUBLE_TYPE_ID:
           type = "F64";
           break;
-        case FudgeTypeDictionary.STRING_TYPE_ID:
+        case FudgeWireType.STRING_TYPE_ID:
           writer.write("if ((status = FudgeString_createFrom (&str, " + value + ", FUDGE_STRING_LENGTH (" + value
               + ") * sizeof (TCHAR))) != FUDGE_OK)");
           returnAndUnwindStmt(writer, unwind, "status");
@@ -994,13 +994,13 @@ import org.fudgemsg.wire.UTF8;
           type = "String";
           value = "str";
           break;
-        case FudgeTypeDictionary.DATE_TYPE_ID:
+        case FudgeWireType.DATE_TYPE_ID:
           comment(writer, "TODO date type");
           break;
-        case FudgeTypeDictionary.DATETIME_TYPE_ID:
+        case FudgeWireType.DATETIME_TYPE_ID:
           comment(writer, "TODO datetime type");
           break;
-        case FudgeTypeDictionary.TIME_TYPE_ID:
+        case FudgeWireType.TIME_TYPE_ID:
           comment(writer, "TODO time type");
           break;
         default:
@@ -1030,18 +1030,18 @@ import org.fudgemsg.wire.UTF8;
       throws IOException {
     if (type instanceof FieldType.ArrayType) {
       switch (type.getFudgeFieldType()) {
-        case FudgeTypeDictionary.BYTE_ARR_4_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_ARR_8_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_ARR_16_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_ARR_20_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_ARR_32_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_ARR_64_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_ARR_128_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_ARR_256_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_ARR_512_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_4_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_8_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_16_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_20_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_32_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_64_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_128_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_256_TYPE_ID:
+        case FudgeWireType.BYTE_ARR_512_TYPE_ID:
           // No additional variables needed
           break;
-        case FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID:
+        case FudgeWireType.SUB_MESSAGE_TYPE_ID:
           writer.write("FudgeMsg arrMsg" + count);
           endStmt(writer);
           writer.write("int n" + count);
@@ -1059,7 +1059,7 @@ import org.fudgemsg.wire.UTF8;
         endStmt(writer);
       }
     } else if (!(type instanceof FieldType.EnumType)
-        && (type.getFudgeFieldType() == FudgeTypeDictionary.STRING_TYPE_ID)) {
+        && (type.getFudgeFieldType() == FudgeWireType.STRING_TYPE_ID)) {
       writer.write("FudgeString str");
       endStmt(writer);
     }
@@ -1182,11 +1182,11 @@ import org.fudgemsg.wire.UTF8;
       return;
     }
     writeAccessor(writer, field);
-    if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
+    if (field.getType().getFudgeFieldType() == FudgeWireType.SUB_MESSAGE_TYPE_ID) {
       writeSubMessageAccessor(writer, field);
     }
     writeMutator(writer, field);
-    if (field.getType().getFudgeFieldType() == FudgeTypeDictionary.SUB_MESSAGE_TYPE_ID) {
+    if (field.getType().getFudgeFieldType() == FudgeWireType.SUB_MESSAGE_TYPE_ID) {
       writeSubMessageMutator(writer, field);
     }
   }
@@ -1202,19 +1202,19 @@ import org.fudgemsg.wire.UTF8;
       return isPointerType(((FieldType.UserType) type).getTypeDefinition().getUnderlyingType());
     } else {
       switch (type.getFudgeFieldType()) {
-        case FudgeTypeDictionary.INDICATOR_TYPE_ID:
-        case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
-        case FudgeTypeDictionary.BYTE_TYPE_ID:
-        case FudgeTypeDictionary.SHORT_TYPE_ID:
-        case FudgeTypeDictionary.INT_TYPE_ID:
-        case FudgeTypeDictionary.LONG_TYPE_ID:
-        case FudgeTypeDictionary.FLOAT_TYPE_ID:
-        case FudgeTypeDictionary.DOUBLE_TYPE_ID:
-        case FudgeTypeDictionary.DATE_TYPE_ID:
-        case FudgeTypeDictionary.DATETIME_TYPE_ID:
-        case FudgeTypeDictionary.TIME_TYPE_ID:
+        case FudgeWireType.INDICATOR_TYPE_ID:
+        case FudgeWireType.BOOLEAN_TYPE_ID:
+        case FudgeWireType.BYTE_TYPE_ID:
+        case FudgeWireType.SHORT_TYPE_ID:
+        case FudgeWireType.INT_TYPE_ID:
+        case FudgeWireType.LONG_TYPE_ID:
+        case FudgeWireType.FLOAT_TYPE_ID:
+        case FudgeWireType.DOUBLE_TYPE_ID:
+        case FudgeWireType.DATE_TYPE_ID:
+        case FudgeWireType.DATETIME_TYPE_ID:
+        case FudgeWireType.TIME_TYPE_ID:
           return false;
-        case FudgeTypeDictionary.STRING_TYPE_ID:
+        case FudgeWireType.STRING_TYPE_ID:
           return true;
         default:
           throw new IllegalStateException("type '" + type + "' is not an expected type (fudge field type "
@@ -1250,7 +1250,7 @@ import org.fudgemsg.wire.UTF8;
           constantStringPointer, depthCount));
     } else {
       switch (type.getFudgeFieldType()) {
-        case FudgeTypeDictionary.STRING_TYPE_ID:
+        case FudgeWireType.STRING_TYPE_ID:
           sb.append("free (");
           if (constantStringPointer) {
             sb.append("(TCHAR*)");
@@ -1394,7 +1394,7 @@ import org.fudgemsg.wire.UTF8;
         }
         writer.write(getIdentifier(message) + "_get" + camelCaseFieldName(field) + " (msg, ");
         if (!field.isRepeated() && !(field.getType() instanceof FieldType.EnumType)
-            && (field.getType().getFudgeFieldType() == FudgeTypeDictionary.STRING_TYPE_ID)) {
+            && (field.getType().getFudgeFieldType() == FudgeWireType.STRING_TYPE_ID)) {
           writer.write("(TCHAR**)");
         }
         writer.write("&ptr->" + privateFieldName(field));
@@ -1647,30 +1647,30 @@ import org.fudgemsg.wire.UTF8;
       return typeString(((FieldType.UserType) type).getTypeDefinition().getUnderlyingType(), stringConstantPointer);
     } else {
       switch (type.getFudgeFieldType()) {
-        case FudgeTypeDictionary.INDICATOR_TYPE_ID:
+        case FudgeWireType.INDICATOR_TYPE_ID:
           // We'll handle indicators as a boolean - was it in the message or not
           return "int";
-        case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
+        case FudgeWireType.BOOLEAN_TYPE_ID:
           return "fudge_bool";
-        case FudgeTypeDictionary.BYTE_TYPE_ID:
+        case FudgeWireType.BYTE_TYPE_ID:
           return "fudge_byte";
-        case FudgeTypeDictionary.SHORT_TYPE_ID:
+        case FudgeWireType.SHORT_TYPE_ID:
           return "fudge_i16";
-        case FudgeTypeDictionary.INT_TYPE_ID:
+        case FudgeWireType.INT_TYPE_ID:
           return "fudge_i32";
-        case FudgeTypeDictionary.LONG_TYPE_ID:
+        case FudgeWireType.LONG_TYPE_ID:
           return "fudge_i64";
-        case FudgeTypeDictionary.FLOAT_TYPE_ID:
+        case FudgeWireType.FLOAT_TYPE_ID:
           return "fudge_f32";
-        case FudgeTypeDictionary.DOUBLE_TYPE_ID:
+        case FudgeWireType.DOUBLE_TYPE_ID:
           return "fudge_f64";
-        case FudgeTypeDictionary.STRING_TYPE_ID:
+        case FudgeWireType.STRING_TYPE_ID:
           return (stringConstantPointer ? "const " : "") + "TCHAR*";
-        case FudgeTypeDictionary.DATE_TYPE_ID:
+        case FudgeWireType.DATE_TYPE_ID:
           return "FudgeDate";
-        case FudgeTypeDictionary.DATETIME_TYPE_ID:
+        case FudgeWireType.DATETIME_TYPE_ID:
           return "FudgeDateTime";
-        case FudgeTypeDictionary.TIME_TYPE_ID:
+        case FudgeWireType.TIME_TYPE_ID:
           return "FudgeTime";
         default:
           throw new IllegalStateException("type '" + type + "' is not an expected type (fudge field type "

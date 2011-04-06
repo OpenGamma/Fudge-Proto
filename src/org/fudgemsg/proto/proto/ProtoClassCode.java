@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.fudgemsg.FudgeTypeDictionary;
 import org.fudgemsg.proto.Binding;
 import org.fudgemsg.proto.CodeGeneratorUtil;
 import org.fudgemsg.proto.Compiler;
@@ -36,6 +35,7 @@ import org.fudgemsg.proto.MessageDefinition;
 import org.fudgemsg.proto.TaxonomyDefinition;
 import org.fudgemsg.proto.TypeDefinition;
 import org.fudgemsg.proto.c.CBlockCode;
+import org.fudgemsg.wire.types.FudgeWireType;
 
 /**
  * Code generator for internal use, creating files in the format read by the
@@ -215,29 +215,29 @@ class ProtoClassCode extends ImplementationlessClassCode {
       return ((FieldType.UserType) type).getTypeDefinition().getIdentifier();
     } else {
       switch (type.getFudgeFieldType()) {
-      case FudgeTypeDictionary.INDICATOR_TYPE_ID:
+      case FudgeWireType.INDICATOR_TYPE_ID:
         return "indicator";
-      case FudgeTypeDictionary.BOOLEAN_TYPE_ID:
+      case FudgeWireType.BOOLEAN_TYPE_ID:
         return "bool";
-      case FudgeTypeDictionary.BYTE_TYPE_ID:
+      case FudgeWireType.BYTE_TYPE_ID:
         return "byte";
-      case FudgeTypeDictionary.SHORT_TYPE_ID:
+      case FudgeWireType.SHORT_TYPE_ID:
         return "short";
-      case FudgeTypeDictionary.INT_TYPE_ID:
+      case FudgeWireType.INT_TYPE_ID:
         return "int";
-      case FudgeTypeDictionary.LONG_TYPE_ID:
+      case FudgeWireType.LONG_TYPE_ID:
         return "long";
-      case FudgeTypeDictionary.FLOAT_TYPE_ID:
+      case FudgeWireType.FLOAT_TYPE_ID:
         return "float";
-      case FudgeTypeDictionary.DOUBLE_TYPE_ID:
+      case FudgeWireType.DOUBLE_TYPE_ID:
         return "double";
-      case FudgeTypeDictionary.STRING_TYPE_ID:
+      case FudgeWireType.STRING_TYPE_ID:
         return "string";
-      case FudgeTypeDictionary.DATE_TYPE_ID :
+      case FudgeWireType.DATE_TYPE_ID :
         return "date";
-      case FudgeTypeDictionary.DATETIME_TYPE_ID :
+      case FudgeWireType.DATETIME_TYPE_ID :
         return "datetime";
-      case FudgeTypeDictionary.TIME_TYPE_ID :
+      case FudgeWireType.TIME_TYPE_ID :
         return "time";
       default:
         throw new IllegalStateException("type '" + type
