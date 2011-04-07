@@ -60,7 +60,7 @@ public class DocumentedClassCode extends ClassCodeAdapter {
   }
   
   private void createdFrom (final IndentWriter writer, final Definition definition) throws IOException {
-    comment (writer, "Created from " + definition.getCodePosition ());
+    //comment (writer, "Created from " + definition.getCodePosition ());
   }
   
   @Override
