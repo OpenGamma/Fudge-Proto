@@ -1220,15 +1220,15 @@ import org.fudgemsg.wire.types.FudgeWireType;
       boolean checkLength = arrayType.isFixedLength();
       switch (type.getFudgeFieldType()) {
         case FudgeWireType.BYTE_ARRAY_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_4_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_8_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_16_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_20_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_32_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_64_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_128_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_256_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_512_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_4_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_8_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_16_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_20_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_32_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_64_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_128_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_256_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_512_TYPE_ID:
           assignTo = writeDecodeSimpleFudgeField(writer, "byte[]", fieldData, fieldRef, fieldContainer,
               assignTo, appendTo, null);
           break;

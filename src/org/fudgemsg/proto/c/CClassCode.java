@@ -446,31 +446,31 @@ import org.fudgemsg.wire.types.FudgeWireType;
         case FudgeWireType.BYTE_ARRAY_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_4_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_4_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_4", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_8_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_8_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_8", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_16_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_16_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_16", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_20_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_20_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_20", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_32_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_32_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_32", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_64_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_64_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_64", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_128_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_128_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_128", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_256_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_256_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_256", "fudge_byte", unwind);
           break;
-        case FudgeWireType.BYTE_ARR_512_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_512_TYPE_ID:
           decodeArrayValue(writer, source, target, "FUDGE_TYPE_BYTE_ARRAY_512", "fudge_byte", unwind);
           break;
         case FudgeWireType.INT_ARRAY_TYPE_ID:
@@ -885,31 +885,31 @@ import org.fudgemsg.wire.types.FudgeWireType;
           value = withArrayLength(writer, value, arrayDepth);
           type = "ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_4_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_4_TYPE_ID:
           type = "4ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_8_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_8_TYPE_ID:
           type = "8ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_16_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_16_TYPE_ID:
           type = "16ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_20_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_20_TYPE_ID:
           type = "20ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_32_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_32_TYPE_ID:
           type = "32ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_64_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_64_TYPE_ID:
           type = "64ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_128_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_128_TYPE_ID:
           type = "128ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_256_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_256_TYPE_ID:
           type = "256ByteArray";
           break;
-        case FudgeWireType.BYTE_ARR_512_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_512_TYPE_ID:
           type = "512ByteArray";
           break;
         case FudgeWireType.INT_ARRAY_TYPE_ID:
@@ -1030,15 +1030,15 @@ import org.fudgemsg.wire.types.FudgeWireType;
       throws IOException {
     if (type instanceof FieldType.ArrayType) {
       switch (type.getFudgeFieldType()) {
-        case FudgeWireType.BYTE_ARR_4_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_8_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_16_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_20_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_32_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_64_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_128_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_256_TYPE_ID:
-        case FudgeWireType.BYTE_ARR_512_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_4_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_8_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_16_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_20_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_32_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_64_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_128_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_256_TYPE_ID:
+        case FudgeWireType.BYTE_ARRAY_512_TYPE_ID:
           // No additional variables needed
           break;
         case FudgeWireType.SUB_MESSAGE_TYPE_ID:

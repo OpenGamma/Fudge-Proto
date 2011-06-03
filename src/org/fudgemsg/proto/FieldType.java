@@ -59,15 +59,15 @@ public abstract class FieldType {
   private static class FudgeByteType extends FieldType {
     
     private final ArrayType ARRAY_VARIABLE = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_TYPE_ID, this, null);
-    private final ArrayType ARRAY_LENGTH_4 = new SimpleArrayType (FudgeWireType.BYTE_ARR_4_TYPE_ID, this, 4);
-    private final ArrayType ARRAY_LENGTH_8 = new SimpleArrayType (FudgeWireType.BYTE_ARR_8_TYPE_ID, this, 8);
-    private final ArrayType ARRAY_LENGTH_16 = new SimpleArrayType (FudgeWireType.BYTE_ARR_16_TYPE_ID, this, 16);
-    private final ArrayType ARRAY_LENGTH_20 = new SimpleArrayType (FudgeWireType.BYTE_ARR_20_TYPE_ID, this, 20);
-    private final ArrayType ARRAY_LENGTH_32 = new SimpleArrayType (FudgeWireType.BYTE_ARR_32_TYPE_ID, this, 32);
-    private final ArrayType ARRAY_LENGTH_64 = new SimpleArrayType (FudgeWireType.BYTE_ARR_64_TYPE_ID, this, 64);
-    private final ArrayType ARRAY_LENGTH_128 = new SimpleArrayType (FudgeWireType.BYTE_ARR_128_TYPE_ID, this, 128);
-    private final ArrayType ARRAY_LENGTH_256 = new SimpleArrayType (FudgeWireType.BYTE_ARR_256_TYPE_ID, this, 256);
-    private final ArrayType ARRAY_LENGTH_512 = new SimpleArrayType (FudgeWireType.BYTE_ARR_512_TYPE_ID, this, 512);
+    private final ArrayType ARRAY_LENGTH_4 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_4_TYPE_ID, this, 4);
+    private final ArrayType ARRAY_LENGTH_8 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_8_TYPE_ID, this, 8);
+    private final ArrayType ARRAY_LENGTH_16 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_16_TYPE_ID, this, 16);
+    private final ArrayType ARRAY_LENGTH_20 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_20_TYPE_ID, this, 20);
+    private final ArrayType ARRAY_LENGTH_32 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_32_TYPE_ID, this, 32);
+    private final ArrayType ARRAY_LENGTH_64 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_64_TYPE_ID, this, 64);
+    private final ArrayType ARRAY_LENGTH_128 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_128_TYPE_ID, this, 128);
+    private final ArrayType ARRAY_LENGTH_256 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_256_TYPE_ID, this, 256);
+    private final ArrayType ARRAY_LENGTH_512 = new SimpleArrayType (FudgeWireType.BYTE_ARRAY_512_TYPE_ID, this, 512);
     
     private FudgeByteType () {
       super ("byte");
