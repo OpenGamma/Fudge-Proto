@@ -273,5 +273,5 @@ public abstract class MessageDefinition extends Definition {
   public boolean hasExternalMessageReferences () {
     return hasExternalMessageReferences (null);
   }
-  
+
 }

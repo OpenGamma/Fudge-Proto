@@ -58,11 +58,11 @@ public class CodeGeneratorFactoryTest {
     }
     
     @Override
-    public void setOption (final String option) {
+    public void setOption (final Compiler compiler, final String option) {
     }
     
     @Override
-    public void setOption (final String option, final String value) {
+    public void setOption (final Compiler compiler, final String option, final String value) {
     }
     
   }

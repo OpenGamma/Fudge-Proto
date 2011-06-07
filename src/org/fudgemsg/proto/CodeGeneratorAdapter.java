@@ -57,13 +57,13 @@ public class CodeGeneratorAdapter implements CodeGenerator {
   }
   
   @Override
-  public void setOption (final String option) {
-    _codeGenerator.setOption (option);
+  public void setOption (final Compiler compiler, final String option) {
+    _codeGenerator.setOption (compiler, option);
   }
   
   @Override
-  public void setOption (final String option, final String value) {
-    _codeGenerator.setOption (option, value);
+  public void setOption (final Compiler compiler, final String option, final String value) {
+    _codeGenerator.setOption (compiler, option, value);
   }
   
 }

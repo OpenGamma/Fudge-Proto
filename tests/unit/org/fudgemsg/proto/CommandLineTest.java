@@ -37,6 +37,8 @@ public class CommandLineTest extends DefaultSettings {
     assertEquals (0, CommandLine.compile (new String[] { "-s" + CompilerTest.getTestPath ("proto") })); // select a different language
     assertEquals (0, CommandLine.compile (new String[] { "-p" + CompilerTest.getTestPath ("proto") })); // set a search path
     assertEquals (1, CommandLine.compile (new String[] { "-Xequals", "-lJava" })); // code gen option before language
+    assertEquals (0, CommandLine.compile (new String[] { "-lJava", "-XtoFromWithContext=false" })); // valid option
+    assertEquals (0, CommandLine.compile (new String[] { "-lJava", "-XtoFromWithContext=true" })); // valid option
     assertEquals (0, CommandLine.compile (new String[] { "-lJava", "-Xequals", "-XhashCode", "-XtoString" })); // valid code gen options for Java
     assertEquals (1, CommandLine.compile (new String[] { "-lJava", "-Xfoo" })); // invalid code gen option for Java
     assertEquals (1, CommandLine.compile (new String[] { "-x" })); // bad parameter

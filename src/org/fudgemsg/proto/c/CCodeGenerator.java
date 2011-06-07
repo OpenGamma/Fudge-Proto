@@ -153,7 +153,7 @@ public class CCodeGenerator extends ClassCodeGenerator {
   }
 
   @Override
-  public void setOption(String option, String value) {
+  public void setOption(Compiler compiler, String option, String value) {
     if (option.equals("cLength")) {
       setCLength(value);
     } else if (option.equals("cSuffix")) {
@@ -163,7 +163,7 @@ public class CCodeGenerator extends ClassCodeGenerator {
     } else if (option.equals("include")) {
       setInclude(value);
     } else {
-      super.setOption(option, value);
+      super.setOption(compiler, option, value);
     }
   }
 

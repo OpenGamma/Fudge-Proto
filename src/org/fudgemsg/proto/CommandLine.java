@@ -144,7 +144,8 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     compilerMessage (false, MSG_INFO, null, message);
   }
   
-  private boolean codeGenOption (final CodeGenerator codeGen, final String option) {
+  private boolean codeGenOption (final Compiler compiler, final String option) {
+    final CodeGenerator codeGen = compiler.getCodeGenerator();
     if (codeGen == null) {
       compilerError (null, "-X option invalid before -l");
       return false;
@@ -152,9 +153,9 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
     int i = option.indexOf ('=');
     try {
       if (i < 0) {
-        codeGen.setOption (option);
+        codeGen.setOption (compiler, option);
       } else {
-        codeGen.setOption (option.substring (0, i), option.substring (i + 1));
+        codeGen.setOption (compiler, option.substring (0, i), option.substring (i + 1));
       }
     } catch (IllegalArgumentException e) {
       compilerError (null, e.getMessage ());
@@ -225,7 +226,7 @@ public class CommandLine implements Compiler.WarningListener, Compiler.ErrorList
           }
           break;
         case 'X' : // -X<option>[=<value>]  Pass flags to the code generator
-          if (!cmdLine.codeGenOption (compiler.getCodeGenerator (), args[i].substring (2))) {
+          if (!cmdLine.codeGenOption (compiler, args[i].substring (2))) {
             return 1;
           }
           break;

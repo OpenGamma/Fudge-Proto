@@ -143,6 +143,10 @@ public class Compiler {
       return Compiler.this.isDefaultFieldsMutable ();
     }
     
+    public boolean isToFromWithContext () {
+      return Compiler.this.isToFromWithContext ();
+    }
+    
   }
   
   private final Context _context = new Context ();
@@ -188,7 +192,9 @@ public class Compiler {
   private boolean _defaultFieldsRequired = GlobalDefault.isCompilerFieldsRequired ();
   
   private boolean _rethrowExceptions = GlobalDefault.isCompilerRethrowExceptions ();
-  
+
+  private boolean _toFromWithContext = true;
+
   /**
    * Creates a new compiler object. Note that a compiler is not thread-safe. If you want to do concurrent compilations, use multiple Compiler objects.
    */ 
@@ -280,6 +286,14 @@ public class Compiler {
     return _defaultFieldsRequired;
   }
   
+  public void setToFromWithContext (final boolean withContext) {
+    _toFromWithContext = withContext;
+  }
+
+  public boolean isToFromWithContext () {
+    return _toFromWithContext;
+  }
+
   public void reset () {
     _warningCount = 0;
     _errorCount = 0;

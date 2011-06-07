@@ -289,7 +289,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
     }
   }
 
-  private void writeBuilderClassFields(JavaWriter writer, MessageDefinition message) throws IOException {
+  private void writeBuilderClassFields(final Compiler.Context context, JavaWriter writer, MessageDefinition message) throws IOException {
     final MessageDefinition superMessage = message.getExtends();
     if (superMessage != null) {
       if (!useBuilderPattern(superMessage)) {
@@ -302,7 +302,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
             }
           }
         }
-        if (message.hasExternalMessageReferences()) {
+        if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
           writer.attribute(false, CLASS_FUDGEDESERIALISATIONCONTEXT, "_fudgeContext");
           endStmt(writer);
           writer.method("protected", CLASS_FUDGEDESERIALISATIONCONTEXT, "getFudgeContext", null);
@@ -803,7 +803,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
     }
   }
 
-  private void writeBuilderClassBuildMethod(final IndentWriter writer, MessageDefinition message) throws IOException {
+  private void writeBuilderClassBuildMethod(final Compiler.Context context, final IndentWriter writer, MessageDefinition message) throws IOException {
     writer.write("public " + message.getName() + " build ()");
     beginBlock(writer);
     writer.write("return ");
@@ -811,7 +811,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
     while (superMessage != null) {
       if (!useBuilderPattern(superMessage)) {
         writer.write("(getFudgeRoot () != null) ? new " + messageDelegateName(message) + " (");
-        if (superMessage.hasExternalMessageReferences()) {
+        if (context.isToFromWithContext() || superMessage.hasExternalMessageReferences()) {
           writer.write("getFudgeContext (), ");
         }
         writer.write("getFudgeRoot (), this) : ");
@@ -831,17 +831,17 @@ import org.fudgemsg.wire.types.FudgeWireType;
     jWriter.classDef(false, true, "Builder", ((ext != null) && useBuilderPattern(ext)) ? ext.getIdentifier()
         + ".Builder" : null, null);
     jWriter = beginBlock(jWriter); // builder class
-    writeBuilderClassFields(jWriter, message);
+    writeBuilderClassFields(context, jWriter, message);
     writePublicConstructor(context, writer, true, message);
-    writeProtectedFudgeMsgConstructor(writer, true, message);
+    writeProtectedFudgeMsgConstructor(context, writer, true, message);
     writeBuilderClassMethods(writer, message);
     if (!message.isAbstract()) {
-      writeBuilderClassBuildMethod(writer, message);
+      writeBuilderClassBuildMethod(context, writer, message);
     }
     endBlock(writer); // builder class
   }
 
-  private void writeProtectedBuilderConstructor(final IndentWriter writer, final MessageDefinition message)
+  private void writeProtectedBuilderConstructor(final Compiler.Context context, final IndentWriter writer, final MessageDefinition message)
       throws IOException {
     writer.write("protected " + message.getName() + " (final Builder builder)");
     beginBlock(writer); // constructor
@@ -883,13 +883,13 @@ import org.fudgemsg.wire.types.FudgeWireType;
     while (msg != null) {
       if (!useBuilderPattern(msg)) {
         writer.write("protected " + message.getName() + " (final ");
-        if (msg.hasExternalMessageReferences()) {
+        if (context.isToFromWithContext() || msg.hasExternalMessageReferences()) {
           writer.write(CLASS_FUDGEDESERIALISATIONCONTEXT + " fudgeContext, final ");
         }
         writer.write(CLASS_FUDGEMSG + " fudgeMsg, final Builder builder)");
         beginBlock(writer); // constructor
         writer.write("super (");
-        if (msg.hasExternalMessageReferences()) {
+        if (context.isToFromWithContext() || msg.hasExternalMessageReferences()) {
           writer.write("fudgeContext, ");
         }
         writer.write("fudgeMsg");
@@ -1012,9 +1012,9 @@ import org.fudgemsg.wire.types.FudgeWireType;
     endStmt(writer);
   }
 
-  private void writeToFudgeMsg(JavaWriter writer, final MessageDefinition message) throws IOException {
-    final String contextClass = message.hasExternalMessageReferences() ? CLASS_FUDGESERIALISATIONCONTEXT
-        : CLASS_FUDGEMMSFACTORY;
+  private void writeToFudgeMsg(final Compiler.Context context, JavaWriter writer, final MessageDefinition message) throws IOException {
+    final String contextClass = (context.isToFromWithContext() || message.hasExternalMessageReferences()) ?
+        CLASS_FUDGESERIALISATIONCONTEXT : CLASS_FUDGEMMSFACTORY;
     if (message.isAbstract()) {
       if (message.getExtends() == null) {
         writer.method("public abstract", CLASS_FUDGEMSG, "toFudgeMsg", "final " + contextClass
@@ -1207,7 +1207,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
     }
   }
 
-  private void writeDecodeFudgeField(JavaWriter writer, final FieldType type, final MessageDefinition message,
+  private void writeDecodeFudgeField(final Compiler.Context context, JavaWriter writer, final FieldType type, final MessageDefinition message,
       final String fieldData, final String fieldRef, final String fieldContainer, String assignTo,
       final String appendTo, final boolean allowNull) throws IOException {
     if (type.getFudgeFieldType() != FudgeWireType.INDICATOR_TYPE_ID) {
@@ -1287,7 +1287,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
           } else {
             writer.ifBool(msgElement + ".getType() != " + CLASS_FUDGE_WIRE_TYPE + ".INDICATOR");
             writer = beginBlock(writer); // if
-            writeDecodeFudgeField(writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList
+            writeDecodeFudgeField(context, writer, baseType, message, msgElement, fieldRef + "[]", subMessage, null, slaveList
                 + ".add", true);
             writer = endBlock(writer); // if
             writer.getWriter().write("else " + slaveList + ".add (null)");
@@ -1330,7 +1330,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
         if (msg.isExternal()) {
           writer.assignment(assignTo, "fudgeContext.fieldValueToObject (" + messageType(msg) + ".class, " + fieldData
               + ")");
-        } else if (msg.hasExternalMessageReferences()) {
+        } else if (context.isToFromWithContext() || msg.hasExternalMessageReferences()) {
           writer.assignment(assignTo, messageType(msg) + ".fromFudgeMsg (fudgeContext, " + value + ")");
         } else {
           writer.assignment(assignTo, messageType(msg) + ".fromFudgeMsg (" + value + ")");
@@ -1461,18 +1461,18 @@ import org.fudgemsg.wire.types.FudgeWireType;
     }
   }
 
-  private void writeDecodeFudgeFieldsToList(JavaWriter writer, final FieldDefinition field, final String localName)
+  private void writeDecodeFudgeFieldsToList(final Compiler.Context context, JavaWriter writer, final FieldDefinition field, final String localName)
       throws IOException {
     writer.assignmentConstruct(localName, listTypeString(field, true), "fudgeFields.size ()");
     endStmt(writer); // list construction
     final String fieldData = writer.forEach(CLASS_FUDGEFIELD, "fudgeFields");
     beginBlock(writer.getWriter()); // iteration
-    writeDecodeFudgeField(writer, field.getType(), field.getOuterMessage(), fieldData, field.getName(), "fudgeMsg",
+    writeDecodeFudgeField(context, writer, field.getType(), field.getOuterMessage(), fieldData, field.getName(), "fudgeMsg",
         null, localName + ".add", false);
     endBlock(writer.getWriter()); // iteration
   }
 
-  private void writeDecodeFudgeFields(final IndentWriter writer, final List<FieldDefinition> fields,
+  private void writeDecodeFudgeFields(final Compiler.Context context, final IndentWriter writer, final List<FieldDefinition> fields,
       final boolean builder) throws IOException {
     JavaWriter jWriter = new JavaWriter(writer);
     for (FieldDefinition field : fields) {
@@ -1497,9 +1497,9 @@ import org.fudgemsg.wire.types.FudgeWireType;
         jWriter.throwInvalidFudgeFieldException(field.getOuterMessage(), field.getName(), "present", null);
         endStmt(jWriter); // if & throw
         if (field.isRepeated()) {
-          writeDecodeFudgeFieldsToList(jWriter, field, privateFieldName(field));
+          writeDecodeFudgeFieldsToList(context, jWriter, field, privateFieldName(field));
         } else {
-          writeDecodeFudgeField(jWriter, field.getType(), field.getOuterMessage(), "fudgeField", field.getName(),
+          writeDecodeFudgeField(context, jWriter, field.getType(), field.getOuterMessage(), "fudgeField", field.getName(),
               "fudgeMsg", privateFieldName(field), null, false);
         }
       } else {
@@ -1509,13 +1509,13 @@ import org.fudgemsg.wire.types.FudgeWireType;
           jWriter = beginBlock(jWriter); // if guard
           final String tempList = jWriter.localVariable(listTypeString(field, false), true);
           endStmt(jWriter); // temp variable
-          writeDecodeFudgeFieldsToList(jWriter, field, tempList);
+          writeDecodeFudgeFieldsToList(context, jWriter, field, tempList);
           writer.write(method + " (" + tempList + ")");
           endStmt(writer); // add to builder or object
         } else {
           jWriter.ifNotNull("fudgeField");
           jWriter = beginBlock(jWriter); // if guard
-          writeDecodeFudgeField(jWriter, field.getType(), field.getOuterMessage(), "fudgeField", field.getName(),
+          writeDecodeFudgeField(context, jWriter, field.getType(), field.getOuterMessage(), "fudgeField", field.getName(),
               "fudgeMsg", null, method, true);
         }
         jWriter = endBlock(jWriter); // if guard
@@ -1523,11 +1523,11 @@ import org.fudgemsg.wire.types.FudgeWireType;
     }
   }
 
-  private void writeProtectedFudgeMsgConstructor(final IndentWriter writer, final boolean builder,
+  private void writeProtectedFudgeMsgConstructor(final Compiler.Context context, final IndentWriter writer, final boolean builder,
       final MessageDefinition message) throws IOException {
     final MessageDefinition superMessage = message.getExtends();
     writer.write("protected " + (builder ? "Builder" : message.getName()) + " (");
-    if (message.hasExternalMessageReferences()) {
+    if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
       writer.write("final " + CLASS_FUDGEDESERIALISATIONCONTEXT + " fudgeContext, ");
     }
     writer.write("final " + CLASS_FUDGEMSG + " fudgeMsg)");
@@ -1536,12 +1536,12 @@ import org.fudgemsg.wire.types.FudgeWireType;
       if (builder && !useBuilderPattern(superMessage)) {
         // we don't have a super constructor, so store the original message
         writer.write("_fudgeRoot = fudgeMsg");
-        if (message.hasExternalMessageReferences()) {
+        if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
           endStmt(writer);
           writer.write("_fudgeContext = fudgeContext");
         }
       } else {
-        if (superMessage.hasExternalMessageReferences()) {
+        if (context.isToFromWithContext() || superMessage.hasExternalMessageReferences()) {
           writer.write("super (fudgeContext, fudgeMsg)");
         } else {
           writer.write("super (fudgeMsg)");
@@ -1576,8 +1576,8 @@ import org.fudgemsg.wire.types.FudgeWireType;
       }
     }
     // required fields must be written first so that all final attribs are set before methods called for the optional ones
-    writeDecodeFudgeFields(writer, required, builder);
-    writeDecodeFudgeFields(writer, optional, builder);
+    writeDecodeFudgeFields(context, writer, required, builder);
+    writeDecodeFudgeFields(context, writer, optional, builder);
     endBlock(writer); // constructor
   }
 
@@ -1648,25 +1648,17 @@ import org.fudgemsg.wire.types.FudgeWireType;
   private void writeFromFudgeMsg(final Compiler.Context context, final IndentWriter writer,
       final MessageDefinition message, final boolean useBuilder) throws IOException {
     final String params, paramTypes;
-    if (message.hasExternalMessageReferences()) {
+    if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
       writer.write("public static " + message.getName() + " fromFudgeMsg (final " + CLASS_FUDGEDESERIALISATIONCONTEXT
           + " fudgeContext, final " + CLASS_FUDGEMSG + " fudgeMsg)");
       params = "fudgeContext, fudgeMsg";
       paramTypes = CLASS_FUDGEDESERIALISATIONCONTEXT + ".class, " + CLASS_FUDGEMSG + ".class";
-      MessageDefinition superMessage = message.getExtends();
-      while (superMessage != null) {
-        if (!superMessage.hasExternalMessageReferences()) {
-          // superclass might not have a FudgeDeserializationContext available when constructing
-          context.warning(message.getCodePosition(), "[PRO-18] external definitions might prevent polymorphic use as "
-              + superMessage.getIdentifier());
-          break;
-        } else {
-          superMessage = superMessage.getExtends();
-        }
+      if (context.isToFromWithContext() == false) {
+        context.warning(message.getCodePosition(), "Code generated with 'toFromWithContext=false' option " +
+            "but an external definition was found, which may fail to compile or run correctly");
       }
     } else {
-      writer.write("public static " + message.getName() + " fromFudgeMsg (final " + CLASS_FUDGEMSG
-          + " fudgeMsg)");
+      writer.write("public static " + message.getName() + " fromFudgeMsg (final " + CLASS_FUDGEMSG + " fudgeMsg)");
       params = "fudgeMsg";
       paramTypes = CLASS_FUDGEMSG + ".class";
     }
@@ -1684,7 +1676,6 @@ import org.fudgemsg.wire.types.FudgeWireType;
     writer.write("return (" + message.getIdentifier()
         + ")Class.forName (className).getDeclaredMethod (\"fromFudgeMsg\", " + paramTypes + ").invoke (null, " + params
         + ")");
-    // TODO 2010-02-17 Andrew -- if the sub-message has external references but we don't then it won't have the correct signature (i.e. we won't have a serialization context); hence the PRO-18 warning above
     endStmt(writer);
     endBlock(writer); // try
     writer.write("catch (Throwable t)");
@@ -1873,14 +1864,14 @@ import org.fudgemsg.wire.types.FudgeWireType;
     writeDefaultValues(context, writer, message);
     if (useBuilder) {
       writeBuilderClass(context, writer, message);
-      writeProtectedBuilderConstructor(writer, message);
+      writeProtectedBuilderConstructor(context, writer, message);
     } else {
       writePublicConstructor(context, writer, false, message);
-      writeProtectedFudgeMsgConstructor(writer, false, message);
+      writeProtectedFudgeMsgConstructor(context, writer, false, message);
     }
     writeFullPublicConstructor(writer, useBuilder, message);
     writeProtectedCopyConstructor(context, writer, message);
-    writeToFudgeMsg(jWriter, message);
+    writeToFudgeMsg(context, jWriter, message);
     writeFromFudgeMsg(context, writer, message, useBuilder);
   }
 

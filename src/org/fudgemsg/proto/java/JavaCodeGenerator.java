@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.proto.Binding;
 import org.fudgemsg.proto.Compiler;
@@ -105,7 +106,7 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
       globalFudgeContext = getGlobalFudgeContext ();
     }
     if ((globalFudgeContext != null) && !message.isAbstract()) {
-      if (message.hasExternalMessageReferences()) {
+      if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
         writer.write("public static " + message.getName()
             + " fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg)");
         beginBlock(writer);
@@ -188,20 +189,24 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
   }
   
   @Override
-  public void setOption (String option) {
+  public void setOption (final Compiler compiler, String option) {
     if (option.equals ("equals")) option = "equality";
     if (option.equals ("hashCode")) option = "hash";
     if (option.equals ("toString")) option = "string";
-    super.setOption (option);
+    super.setOption (compiler, option);
   }
   
   @Override
-  public void setOption (String option, String value) {
+  public void setOption (final Compiler compiler, String option, String value) {
     if (option.equals ("fudgeContext")) {
       setGlobalFudgeContext (value);
       return;
     }
-    super.setOption (option, value);
+    if (option.equals ("toFromWithContext")) {
+      compiler.setToFromWithContext (BooleanUtils.toBoolean(value, "true", "false"));
+      return;
+    }
+    super.setOption (compiler, option, value);
   }
    
 }
