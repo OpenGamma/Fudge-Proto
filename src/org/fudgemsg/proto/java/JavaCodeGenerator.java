@@ -108,20 +108,20 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
     if ((globalFudgeContext != null) && !message.isAbstract()) {
       if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
         writer.write("public static " + message.getName()
-            + " fromFudgeMsg (final org.fudgemsg.FudgeFieldContainer fudgeMsg)");
+            + " fromFudgeMsg (final " + JavaClassCode.CLASS_FUDGEMSG + " fudgeMsg)");
         beginBlock(writer);
-        writer.write("return fromFudgeMsg (new org.fudgemsg.mapping.FudgeDeserializationContext (" + globalFudgeContext
+        writer.write("return fromFudgeMsg (new " + JavaClassCode.CLASS_FUDGEDESERIALIZER + " (" + globalFudgeContext
             + "), fudgeMsg)");
         endStmt(writer);
         endBlock(writer);
-        writer.write("public org.fudgemsg.FudgeFieldContainer toFudgeMsg ()");
+        writer.write("public " + JavaClassCode.CLASS_FUDGEMSG + " toFudgeMsg ()");
         beginBlock(writer);
-        writer.write("return toFudgeMsg (new org.fudgemsg.mapping.FudgeSerializationContext (" + globalFudgeContext
+        writer.write("return toFudgeMsg (new " + JavaClassCode.CLASS_FUDGESERIALIZER + " (" + globalFudgeContext
             + "))");
         endStmt(writer);
         endBlock(writer);
       } else {
-        writer.write("public org.fudgemsg.FudgeFieldContainer toFudgeMsg ()");
+        writer.write("public " + JavaClassCode.CLASS_FUDGEMSG + " toFudgeMsg ()");
         beginBlock(writer);
         writer.write("return toFudgeMsg (" + globalFudgeContext + ")");
         endStmt(writer);

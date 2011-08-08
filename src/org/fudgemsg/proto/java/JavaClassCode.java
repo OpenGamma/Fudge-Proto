@@ -53,31 +53,31 @@ import org.fudgemsg.wire.types.FudgeWireType;
 
   // The constants below are for safety and convenience in Java world, but the approach isn't portable to other codegens written in Java.
 
-  private static final String CLASS_COLLECTIONS = java.util.Collections.class.getName();
-  private static final String CLASS_COLLECTION = java.util.Collection.class.getName();
-  private static final String CLASS_FUDGEMSG = org.fudgemsg.FudgeMsg.class.getName();
-  private static final String CLASS_MUTABLEFUDGEMSG = org.fudgemsg.MutableFudgeMsg.class.getName();
-  private static final String CLASS_MAPFUDGETAXONOMY = org.fudgemsg.taxonomy.MapFudgeTaxonomy.class.getName();
-  private static final String CLASS_ARRAYLIST = java.util.ArrayList.class.getName();
-  private static final String CLASS_FUDGEMMSFACTORY = org.fudgemsg.FudgeMsgFactory.class.getName();
-  private static final String CLASS_FUDGEDESERIALISATIONCONTEXT = org.fudgemsg.mapping.FudgeDeserializationContext.class.getName();
-  private static final String CLASS_FUDGESERIALISATIONCONTEXT = org.fudgemsg.mapping.FudgeSerializationContext.class.getName();
-  private static final String CLASS_FUDGETAXONOMY = org.fudgemsg.taxonomy.FudgeTaxonomy.class.getName();
-  private static final String CLASS_LIST = java.util.List.class.getName();
-  private static final String CLASS_ARRAYS = java.util.Arrays.class.getName();
-  private static final String CLASS_LISTITERATOR = java.util.ListIterator.class.getName();
-  private static final String CLASS_FUDGEFIELD = org.fudgemsg.FudgeField.class.getName();
-  private static final String CLASS_INDICATOR = org.fudgemsg.types.IndicatorType.class.getName();
-  private static final String CLASS_FUDGE_WIRE_TYPE = org.fudgemsg.wire.types.FudgeWireType.class.getName();
-  private static final String CLASS_TOSTRINGBUILDER = org.apache.commons.lang.builder.ToStringBuilder.class.getName();
-  private static final String CLASS_TOSTRINGSTYLE = org.apache.commons.lang.builder.ToStringStyle.class.getName();
-  private static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName();
-  private static final String CLASS_DATEPROVIDER = "javax.time.calendar.DateProvider";
-  private static final String CLASS_DATE = "javax.time.calendar.LocalDate";
-  private static final String CLASS_TIMEPROVIDER = "javax.time.calendar.TimeProvider";
-  private static final String CLASS_TIME = "javax.time.calendar.LocalTime";
+  static final String CLASS_COLLECTIONS = java.util.Collections.class.getName();
+  static final String CLASS_COLLECTION = java.util.Collection.class.getName();
+  static final String CLASS_FUDGEMSG = org.fudgemsg.FudgeMsg.class.getName();
+  static final String CLASS_MUTABLEFUDGEMSG = org.fudgemsg.MutableFudgeMsg.class.getName();
+  static final String CLASS_MAPFUDGETAXONOMY = org.fudgemsg.taxonomy.MapFudgeTaxonomy.class.getName();
+  static final String CLASS_ARRAYLIST = java.util.ArrayList.class.getName();
+  static final String CLASS_FUDGEMMSFACTORY = org.fudgemsg.FudgeMsgFactory.class.getName();
+  static final String CLASS_FUDGEDESERIALIZER = org.fudgemsg.mapping.FudgeDeserializer.class.getName();
+  static final String CLASS_FUDGESERIALIZER = org.fudgemsg.mapping.FudgeSerializer.class.getName();
+  static final String CLASS_FUDGETAXONOMY = org.fudgemsg.taxonomy.FudgeTaxonomy.class.getName();
+  static final String CLASS_LIST = java.util.List.class.getName();
+  static final String CLASS_ARRAYS = java.util.Arrays.class.getName();
+  static final String CLASS_LISTITERATOR = java.util.ListIterator.class.getName();
+  static final String CLASS_FUDGEFIELD = org.fudgemsg.FudgeField.class.getName();
+  static final String CLASS_INDICATOR = org.fudgemsg.types.IndicatorType.class.getName();
+  static final String CLASS_FUDGE_WIRE_TYPE = org.fudgemsg.wire.types.FudgeWireType.class.getName();
+  static final String CLASS_TOSTRINGBUILDER = org.apache.commons.lang.builder.ToStringBuilder.class.getName();
+  static final String CLASS_TOSTRINGSTYLE = org.apache.commons.lang.builder.ToStringStyle.class.getName();
+  static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName();
+  static final String CLASS_DATEPROVIDER = "javax.time.calendar.DateProvider";
+  static final String CLASS_DATE = "javax.time.calendar.LocalDate";
+  static final String CLASS_TIMEPROVIDER = "javax.time.calendar.TimeProvider";
+  static final String CLASS_TIME = "javax.time.calendar.LocalTime";
 
-  private static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
+  static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
 
   private static final String DEFAULT_DATETIME_TYPE = "javax.time.calendar.LocalDateTime=javax.time.calendar.DateTimeProvider/toLocalDateTime";
 
@@ -303,11 +303,11 @@ import org.fudgemsg.wire.types.FudgeWireType;
           }
         }
         if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
-          writer.attribute(false, CLASS_FUDGEDESERIALISATIONCONTEXT, "_fudgeContext");
+          writer.attribute(false, CLASS_FUDGEDESERIALIZER, "_deserializer");
           endStmt(writer);
-          writer.method("protected", CLASS_FUDGEDESERIALISATIONCONTEXT, "getFudgeContext", null);
+          writer.method("protected", CLASS_FUDGEDESERIALIZER, "getDeserializer", null);
           writer = beginBlock(writer);
-          writer.returnVariable("_fudgeContext");
+          writer.returnVariable("_deserializer");
           endStmt(writer);
           writer = endBlock(writer);
         }
@@ -812,7 +812,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
       if (!useBuilderPattern(superMessage)) {
         writer.write("(getFudgeRoot () != null) ? new " + messageDelegateName(message) + " (");
         if (context.isToFromWithContext() || superMessage.hasExternalMessageReferences()) {
-          writer.write("getFudgeContext (), ");
+          writer.write("getDeserializer (), ");
         }
         writer.write("getFudgeRoot (), this) : ");
         break;
@@ -884,13 +884,13 @@ import org.fudgemsg.wire.types.FudgeWireType;
       if (!useBuilderPattern(msg)) {
         writer.write("protected " + message.getName() + " (final ");
         if (context.isToFromWithContext() || msg.hasExternalMessageReferences()) {
-          writer.write(CLASS_FUDGEDESERIALISATIONCONTEXT + " fudgeContext, final ");
+          writer.write(CLASS_FUDGEDESERIALIZER + " serializer, final ");
         }
         writer.write(CLASS_FUDGEMSG + " fudgeMsg, final Builder builder)");
         beginBlock(writer); // constructor
         writer.write("super (");
         if (context.isToFromWithContext() || msg.hasExternalMessageReferences()) {
-          writer.write("fudgeContext, ");
+          writer.write("serializer, ");
         }
         writer.write("fudgeMsg");
         if (msg != superMessage) {
@@ -956,8 +956,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
         break;
       case FudgeWireType.SUB_MESSAGE_TYPE_ID:
         if (type instanceof FieldType.ArrayType) {
-          final String temp1 = writer.localVariable(CLASS_MUTABLEFUDGEMSG, true,
-              "fudgeContext.newMessage ()");
+          final String temp1 = writer.localVariable(CLASS_MUTABLEFUDGEMSG, true, "serializer.newMessage ()");
           endStmt(writer);
           final FieldType baseType = ((FieldType.ArrayType) type).getBaseType();
           final String temp2 = writer.forEach(storageTypeString(message, baseType, false), value);
@@ -979,27 +978,27 @@ import org.fudgemsg.wire.types.FudgeWireType;
           value = temp1;
         } else if (type instanceof FieldType.MessageType) {
           if (type instanceof FieldType.AnonMessageType) {
-            value = "(" + value + " instanceof " + CLASS_MUTABLEFUDGEMSG + ") ? fudgeContext.newMessage (" + value + ")"
+            value = "(" + value + " instanceof " + CLASS_MUTABLEFUDGEMSG + ") ? serializer.newMessage (" + value + ")"
                 + " : " + value;
           } else {
             final MessageDefinition messageDefinition = ((FieldType.MessageType) type).getMessageDefinition();
             if (messageDefinition.isExternal()) {
-              writer.invoke("fudgeContext", "addToMessageWithClassHeaders", msg + ", " + name + ", " + ordinal
+              writer.invoke("serializer", "addToMessageWithClassHeaders", msg + ", " + name + ", " + ordinal
                   + ", " + value + ", " + messageDefinition.getIdentifier() + ".class");
               endStmt(writer);
               return;
             } else {
               final String temp1 = writer.localVariable(CLASS_MUTABLEFUDGEMSG, true,
-                  CLASS_FUDGESERIALISATIONCONTEXT + ".addClassHeader (fudgeContext.newMessage (), " + value
+                  CLASS_FUDGESERIALIZER + ".addClassHeader (serializer.newMessage (), " + value
                       + ".getClass (), " + messageDefinition.getIdentifier() + ".class)");
               endStmt(writer);
-              writer.invoke(value, "toFudgeMsg", "fudgeContext, " + temp1);
+              writer.invoke(value, "toFudgeMsg", "serializer, " + temp1);
               endStmt(writer);
               value = temp1;
             }
           }
         } else if (type instanceof FieldType.UserType) {
-          writer.invoke("fudgeContext", "addToMessage", msg + ", " + name + ", " + ordinal + ", " + value);
+          writer.invoke("serializer", "addToMessage", msg + ", " + name + ", " + ordinal + ", " + value);
           endStmt(writer);
           return;
         } else {
@@ -1014,32 +1013,32 @@ import org.fudgemsg.wire.types.FudgeWireType;
 
   private void writeToFudgeMsg(final Compiler.Context context, JavaWriter writer, final MessageDefinition message) throws IOException {
     final String contextClass = (context.isToFromWithContext() || message.hasExternalMessageReferences()) ?
-        CLASS_FUDGESERIALISATIONCONTEXT : CLASS_FUDGEMMSFACTORY;
+        CLASS_FUDGESERIALIZER : CLASS_FUDGEMMSFACTORY;
     if (message.isAbstract()) {
       if (message.getExtends() == null) {
         writer.method("public abstract", CLASS_FUDGEMSG, "toFudgeMsg", "final " + contextClass
-            + " fudgeContext");
+            + " serializer");
         endStmt(writer);
       }
     } else {
-      writer.method("public", CLASS_FUDGEMSG, "toFudgeMsg", "final " + contextClass + " fudgeContext");
+      writer.method("public", CLASS_FUDGEMSG, "toFudgeMsg", "final " + contextClass + " serializer");
       writer = beginBlock(writer); // toFudgeMsg
-      writer.ifNull("fudgeContext");
-      writer.throwNullParameterException("fudgeContext");
+      writer.ifNull("serializer");
+      writer.throwNullParameterException("serializer");
       endStmt(writer);
-      writer.namedLocalVariable(CLASS_MUTABLEFUDGEMSG, "msg", "fudgeContext.newMessage ()");
+      writer.namedLocalVariable(CLASS_MUTABLEFUDGEMSG, "msg", "serializer.newMessage ()");
       endStmt(writer);
-      writer.invoke("toFudgeMsg", "fudgeContext, msg");
+      writer.invoke("toFudgeMsg", "serializer, msg");
       endStmt(writer);
       writer.returnVariable("msg");
       endStmt(writer);
       writer = endBlock(writer); // toFudgeMsg
     }
-    writer.method("public", "void", "toFudgeMsg", "final " + contextClass + " fudgeContext, final "
+    writer.method("public", "void", "toFudgeMsg", "final " + contextClass + " serializer, final "
         + CLASS_MUTABLEFUDGEMSG + " msg");
     writer = beginBlock(writer); // toFudgeMsg
     if (message.getExtends() != null) {
-      writer.invoke("super", "toFudgeMsg", "fudgeContext, msg");
+      writer.invoke("super", "toFudgeMsg", "serializer, msg");
       endStmt(writer);
     }
     for (FieldDefinition field : message.getFieldDefinitions()) {
@@ -1328,10 +1327,10 @@ import org.fudgemsg.wire.types.FudgeWireType;
         endStmt(writer);
       } else {
         if (msg.isExternal()) {
-          writer.assignment(assignTo, "fudgeContext.fieldValueToObject (" + messageType(msg) + ".class, " + fieldData
+          writer.assignment(assignTo, "deserializer.fieldValueToObject (" + messageType(msg) + ".class, " + fieldData
               + ")");
         } else if (context.isToFromWithContext() || msg.hasExternalMessageReferences()) {
-          writer.assignment(assignTo, messageType(msg) + ".fromFudgeMsg (fudgeContext, " + value + ")");
+          writer.assignment(assignTo, messageType(msg) + ".fromFudgeMsg (deserializer, " + value + ")");
         } else {
           writer.assignment(assignTo, messageType(msg) + ".fromFudgeMsg (" + value + ")");
         }
@@ -1356,7 +1355,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
       final TypeDefinition typedef = ((FieldType.UserType) type).getTypeDefinition();
       final String value;
       if (typedef.getUnderlyingType() instanceof FieldType.MessageType) {
-        value = "fudgeContext.fieldValueToObject (" + typedef.getIdentifier() + ".class, " + fieldData + ")";
+        value = "deserializer.fieldValueToObject (" + typedef.getIdentifier() + ".class, " + fieldData + ")";
       } else {
         value = fudgeFieldValueExpression(fieldContainer, typedef.getIdentifier(), fieldData);
       }
@@ -1528,7 +1527,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
     final MessageDefinition superMessage = message.getExtends();
     writer.write("protected " + (builder ? "Builder" : message.getName()) + " (");
     if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
-      writer.write("final " + CLASS_FUDGEDESERIALISATIONCONTEXT + " fudgeContext, ");
+      writer.write("final " + CLASS_FUDGEDESERIALIZER + " deserializer, ");
     }
     writer.write("final " + CLASS_FUDGEMSG + " fudgeMsg)");
     beginBlock(writer); // constructor
@@ -1538,11 +1537,11 @@ import org.fudgemsg.wire.types.FudgeWireType;
         writer.write("_fudgeRoot = fudgeMsg");
         if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
           endStmt(writer);
-          writer.write("_fudgeContext = fudgeContext");
+          writer.write("_deserializer = deserializer");
         }
       } else {
         if (context.isToFromWithContext() || superMessage.hasExternalMessageReferences()) {
-          writer.write("super (fudgeContext, fudgeMsg)");
+          writer.write("super (deserializer, fudgeMsg)");
         } else {
           writer.write("super (fudgeMsg)");
         }
@@ -1649,10 +1648,10 @@ import org.fudgemsg.wire.types.FudgeWireType;
       final MessageDefinition message, final boolean useBuilder) throws IOException {
     final String params, paramTypes;
     if (context.isToFromWithContext() || message.hasExternalMessageReferences()) {
-      writer.write("public static " + message.getName() + " fromFudgeMsg (final " + CLASS_FUDGEDESERIALISATIONCONTEXT
-          + " fudgeContext, final " + CLASS_FUDGEMSG + " fudgeMsg)");
-      params = "fudgeContext, fudgeMsg";
-      paramTypes = CLASS_FUDGEDESERIALISATIONCONTEXT + ".class, " + CLASS_FUDGEMSG + ".class";
+      writer.write("public static " + message.getName() + " fromFudgeMsg (final " + CLASS_FUDGEDESERIALIZER
+          + " deserializer, final " + CLASS_FUDGEMSG + " fudgeMsg)");
+      params = "deserializer, fudgeMsg";
+      paramTypes = CLASS_FUDGEDESERIALIZER + ".class, " + CLASS_FUDGEMSG + ".class";
       if (context.isToFromWithContext() == false) {
         context.warning(message.getCodePosition(), "Code generated with 'toFromWithContext=false' option " +
             "but an external definition was found, which may fail to compile or run correctly");
