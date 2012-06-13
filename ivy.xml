@@ -11,7 +11,6 @@
     </publications>
 
     <dependencies>
-        <dependency org="org.apache.commons" name="commons-lang" rev="2.4" />
         <dependency org="org.apache.ant" name="ant" rev="[1.7.0,1.8.0[" />
         <dependency org="org.antlr" name="antlr" rev="[3.1,4.0[" />
         <dependency org="org.fudgemsg" name="fudge-java" rev="latest.integration" />

@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang.BooleanUtils;
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.proto.Binding;
 import org.fudgemsg.proto.Compiler;
@@ -203,7 +202,11 @@ public class JavaCodeGenerator extends InnerClassCodeGenerator {
       return;
     }
     if (option.equals ("toFromWithContext")) {
-      compiler.setToFromWithContext (BooleanUtils.toBoolean(value, "true", "false"));
+      if ("true".equals(value)) {
+        compiler.setToFromWithContext(true);
+      } else if ("false".equals(value)) {
+        compiler.setToFromWithContext(false);
+      }
       return;
     }
     super.setOption (compiler, option, value);

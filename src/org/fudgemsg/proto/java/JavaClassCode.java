@@ -69,8 +69,8 @@ import org.fudgemsg.wire.types.FudgeWireType;
   static final String CLASS_FUDGEFIELD = org.fudgemsg.FudgeField.class.getName();
   static final String CLASS_INDICATOR = org.fudgemsg.types.IndicatorType.class.getName();
   static final String CLASS_FUDGE_WIRE_TYPE = org.fudgemsg.wire.types.FudgeWireType.class.getName();
-  static final String CLASS_TOSTRINGBUILDER = org.apache.commons.lang.builder.ToStringBuilder.class.getName();
-  static final String CLASS_TOSTRINGSTYLE = org.apache.commons.lang.builder.ToStringStyle.class.getName();
+  static final String CLASS_TOSTRINGBUILDER = "org.apache.commons.lang.builder.ToStringBuilder"; // string avoids dependency
+  static final String CLASS_TOSTRINGSTYLE = "org.apache.commons.lang.builder.ToStringStyle"; // string avoids dependency
   static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName();
   static final String CLASS_DATEPROVIDER = "javax.time.calendar.DateProvider";
   static final String CLASS_DATE = "javax.time.calendar.LocalDate";
