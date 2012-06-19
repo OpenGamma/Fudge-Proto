@@ -15,3 +15,5 @@ tests/out_Java/
 tests/output/
 /MANIFEST.MF
 build.number
+/target/
+/bin/
