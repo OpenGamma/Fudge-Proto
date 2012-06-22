@@ -19,22 +19,38 @@ import javax.time.calendar.LocalDate;
 import javax.time.calendar.LocalDateTime;
 import javax.time.calendar.LocalTime;
 
-import org.fudgemsg.FudgeFieldContainer;
+import org.fudgemsg.FudgeMsg;
 
 public interface TypesBase_Optional {
-  public Boolean get_Boolean ();
-  public Byte get_Byte ();
-  public Double get_Double ();
-  public Float get_Float ();
-  public Boolean get_Indicator ();
-  public Integer get_Int ();
-  public Long get_Long ();
-  public Short get_Short ();
-  public String get_String ();
-  public SubMessage get_SubMessage ();
-  public CustomEnum get_CustomEnum ();
-  public FudgeFieldContainer get_Message ();
-  public LocalDate get_Date ();
-  public LocalDateTime get_DateTime ();
-  public LocalTime get_Time ();
+
+  public Boolean get_Boolean();
+
+  public Byte get_Byte();
+
+  public Double get_Double();
+
+  public Float get_Float();
+
+  public Boolean get_Indicator();
+
+  public Integer get_Int();
+
+  public Long get_Long();
+
+  public Short get_Short();
+
+  public String get_String();
+
+  public SubMessage get_SubMessage();
+
+  public CustomEnum get_CustomEnum();
+
+  public FudgeMsg get_Message();
+
+  public LocalDate get_Date();
+
+  public LocalDateTime get_DateTime();
+
+  public LocalTime get_Time();
+
 }

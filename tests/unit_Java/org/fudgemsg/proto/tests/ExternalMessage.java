@@ -15,10 +15,10 @@
 
 package org.fudgemsg.proto.tests;
 
-import org.fudgemsg.FudgeFieldContainer;
-import org.fudgemsg.MutableFudgeFieldContainer;
-import org.fudgemsg.mapping.FudgeDeserializationContext;
-import org.fudgemsg.mapping.FudgeSerializationContext;
+import org.fudgemsg.FudgeMsg;
+import org.fudgemsg.MutableFudgeMsg;
+import org.fudgemsg.mapping.FudgeDeserializer;
+import org.fudgemsg.mapping.FudgeSerializer;
 
 public class ExternalMessage {
   
@@ -29,10 +29,10 @@ public class ExternalMessage {
     
   }
   
-  public ExternalMessage (final FudgeDeserializationContext context, final FudgeFieldContainer msg) {
+  public ExternalMessage(final FudgeDeserializer context, final FudgeMsg msg) {
   }
   
-  public void toFudgeMsg (final FudgeSerializationContext context, final MutableFudgeFieldContainer msg) {
+  public void toFudgeMsg(final FudgeSerializer context, final MutableFudgeMsg msg) {
   }
   
   public ExternalMessage clone () {

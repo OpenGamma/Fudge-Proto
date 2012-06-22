@@ -29,8 +29,10 @@ import javax.time.calendar.DateTimeProvider;
 import javax.time.calendar.TimeProvider;
 
 import org.fudgemsg.FudgeContext;
-import org.fudgemsg.FudgeFieldContainer;
-import org.fudgemsg.MutableFudgeFieldContainer;
+import org.fudgemsg.FudgeMsg;
+import org.fudgemsg.MutableFudgeMsg;
+import org.fudgemsg.mapping.FudgeDeserializer;
+import org.fudgemsg.mapping.FudgeSerializer;
 import org.fudgemsg.proto.tests.types.AATypesBase;
 import org.fudgemsg.proto.tests.types.AATypes_Optional;
 import org.fudgemsg.proto.tests.types.AATypes_Required;
@@ -581,24 +583,24 @@ public class TypesTest {
     return r;
   }
   
-  private FudgeFieldContainer smessage () {
-    MutableFudgeFieldContainer ffc = _fudgeContext.newMessage ();
+  private FudgeMsg smessage() {
+    MutableFudgeMsg ffc = _fudgeContext.newMessage();
     ffc.add (sstring (), _random.nextInt (256), sstring ());
     return ffc;
   }
   
-  private FudgeFieldContainer[] amessage () {
+  private FudgeMsg[] amessage() {
     final int n = arraySize ();
-    final FudgeFieldContainer[] r = new FudgeFieldContainer[n];
+    final FudgeMsg[] r = new FudgeMsg[n];
     for (int i = 0; i < n; i++) {
       r[i] = smessage ();
     }
     return r;
   }
   
-  private FudgeFieldContainer[][] aamessage () {
+  private FudgeMsg[][] aamessage() {
     final int n = arraySize ();
-    final FudgeFieldContainer[][] r = new FudgeFieldContainer[n][];
+    final FudgeMsg[][] r = new FudgeMsg[n][];
     for (int i = 0; i < n; i++) {
       r[i] = amessage ();
     }
@@ -690,14 +692,14 @@ public class TypesTest {
     builder._DateTime (aadatetime ());
     builder._Time (aatime ());
     AATypes_Optional in = builder.build ();
-    AATypes_Optional out = AATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    AATypes_Optional out = AATypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void aa_required () {
     AATypes_Required in = new AATypes_Required (aabool (), aabyte (), aadouble (), aafloat (), aaindicator (), aaint (), aalong (), aashort (), aastring (), aasubmessage (), aacustomenum (), aamessage (), aadate (), aadatetime (), aatime ());
-    AATypes_Required out = AATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    AATypes_Required out = AATypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -720,14 +722,14 @@ public class TypesTest {
     builder._DateTime (adatetime ());
     builder._Time (atime ());
     ATypes_Optional in = builder.build ();
-    ATypes_Optional out = ATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    ATypes_Optional out = ATypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void a_required () {
     ATypes_Required in = new ATypes_Required (abool (), abyte (), adouble (), afloat (), aindicator (), aint (), along (), ashort (), astring (), asubmessage (), acustomenum (), amessage (), adate (), adatetime (), atime ());
-    ATypes_Required out = ATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    ATypes_Required out = ATypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -750,14 +752,14 @@ public class TypesTest {
     builder._DateTime (Arrays.asList (aadatetime ()));
     builder._Time (Arrays.asList (aatime ()));
     RATypes_Optional in = builder.build ();
-    RATypes_Optional out = RATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    RATypes_Optional out = RATypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void ra_required () {
     RATypes_Required in = new RATypes_Required (Arrays.asList (aabool ()), Arrays.asList (aabyte ()), Arrays.asList (aadouble ()), Arrays.asList (aafloat ()), Arrays.asList (aaindicator ()), Arrays.asList (aaint ()), Arrays.asList (aalong ()), Arrays.asList (aashort ()), Arrays.asList (aastring ()), Arrays.asList (aasubmessage ()), Arrays.asList (aacustomenum ()), Arrays.asList (aamessage ()), Arrays.asList (aadate ()), Arrays.asList (aadatetime ()), Arrays.asList (aatime ()));
-    RATypes_Required out = RATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    RATypes_Required out = RATypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -780,14 +782,14 @@ public class TypesTest {
     builder._DateTime (Arrays.asList (adatetime ()));
     builder._Time (Arrays.asList (atime ()));
     RSTypes_Optional in = builder.build ();
-    RSTypes_Optional out = RSTypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    RSTypes_Optional out = RSTypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void rs_required () {
     RSTypes_Required in = new RSTypes_Required (Arrays.asList (sbool ()), Arrays.asList (sbyte ()), Arrays.asList (sdouble ()), Arrays.asList (sfloat ()), Arrays.asList (sindicator ()), Arrays.asList (sint ()), Arrays.asList (slong ()), Arrays.asList (sshort ()), Arrays.asList (astring ()), Arrays.asList (asubmessage ()), Arrays.asList (acustomenum ()), Arrays.asList (amessage ()), Arrays.asList (adate ()), Arrays.asList (adatetime ()), Arrays.asList (atime ()));
-    RSTypes_Required out = RSTypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    RSTypes_Required out = RSTypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -810,14 +812,14 @@ public class TypesTest {
     builder._DateTime (sdatetime ());
     builder._Time (stime ());
     STypes_Optional in = builder.build ();
-    STypes_Optional out = STypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    STypes_Optional out = STypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void s_required () {
     STypes_Required in = new STypes_Required (sbool (), sbyte (), sdouble (), sfloat (), sindicator (), sint (), slong (), sshort (), sstring (), ssubmessage (), scustomenum (), smessage (), sdate (), sdatetime (), stime ());
-    STypes_Required out = STypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    STypes_Required out = STypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -839,14 +841,14 @@ public class TypesTest {
     in.set_Date (aadate ());
     in.set_DateTime (aadatetime ());
     in.set_Time (aatime ());
-    MutableAATypes_Optional out = MutableAATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableAATypes_Optional out = MutableAATypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void maa_required () {
     MutableAATypes_Required in = new MutableAATypes_Required (aabool (), aabyte (), aadouble (), aafloat (), aaindicator (), aaint (), aalong (), aashort (), aastring (), aasubmessage (), aacustomenum (), aamessage (), aadate (), aadatetime (), aatime ());
-    MutableAATypes_Required out = MutableAATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableAATypes_Required out = MutableAATypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -868,14 +870,14 @@ public class TypesTest {
     in.set_Date (adate ());
     in.set_DateTime (adatetime ());
     in.set_Time (atime ());
-    MutableATypes_Optional out = MutableATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableATypes_Optional out = MutableATypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void ma_required () {
     MutableATypes_Required in = new MutableATypes_Required (abool (), abyte (), adouble (), afloat (), aindicator (), aint (), along (), ashort (), astring (), asubmessage (), acustomenum (), amessage (), adate (), adatetime (), atime ());
-    MutableATypes_Required out = MutableATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableATypes_Required out = MutableATypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -897,14 +899,14 @@ public class TypesTest {
     in.set_Date (Arrays.asList (aadate ()));
     in.set_DateTime (Arrays.asList (aadatetime ()));
     in.set_Time (Arrays.asList (aatime ()));
-    MutableRATypes_Optional out = MutableRATypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableRATypes_Optional out = MutableRATypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void mra_required () {
     MutableRATypes_Required in = new MutableRATypes_Required (Arrays.asList (aabool ()), Arrays.asList (aabyte ()), Arrays.asList (aadouble ()), Arrays.asList (aafloat ()), Arrays.asList (aaindicator ()), Arrays.asList (aaint ()), Arrays.asList (aalong ()), Arrays.asList (aashort ()), Arrays.asList (aastring ()), Arrays.asList (aasubmessage ()), Arrays.asList (aacustomenum ()), Arrays.asList (aamessage ()), Arrays.asList (aadate ()), Arrays.asList (aadatetime ()), Arrays.asList (aatime ()));
-    MutableRATypes_Required out = MutableRATypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableRATypes_Required out = MutableRATypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -926,14 +928,14 @@ public class TypesTest {
     in.set_Date (Arrays.asList (adate ()));
     in.set_DateTime (Arrays.asList (adatetime ()));
     in.set_Time (Arrays.asList (atime ()));
-    MutableRSTypes_Optional out = MutableRSTypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableRSTypes_Optional out = MutableRSTypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void mrs_required () {
     MutableRSTypes_Required in = new MutableRSTypes_Required (Arrays.asList (sbool ()), Arrays.asList (sbyte ()), Arrays.asList (sdouble ()), Arrays.asList (sfloat ()), Arrays.asList (sindicator ()), Arrays.asList (sint ()), Arrays.asList (slong ()), Arrays.asList (sshort ()), Arrays.asList (astring ()), Arrays.asList (asubmessage ()), Arrays.asList (acustomenum ()), Arrays.asList (amessage ()), Arrays.asList (adate ()), Arrays.asList (adatetime ()), Arrays.asList (atime ()));
-    MutableRSTypes_Required out = MutableRSTypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableRSTypes_Required out = MutableRSTypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
@@ -955,14 +957,14 @@ public class TypesTest {
     in.set_Date (sdate ());
     in.set_DateTime (sdatetime ());
     in.set_Time (stime ());
-    MutableSTypes_Optional out = MutableSTypes_Optional.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableSTypes_Optional out = MutableSTypes_Optional.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   
   @Test
   public void ms_required () {
     MutableSTypes_Required in = new MutableSTypes_Required (sbool (), sbyte (), sdouble (), sfloat (), sindicator (), sint (), slong (), sshort (), sstring (), ssubmessage (), scustomenum (), smessage (), sdate (), sdatetime (), stime ());
-    MutableSTypes_Required out = MutableSTypes_Required.fromFudgeMsg (in.toFudgeMsg (_fudgeContext));
+    MutableSTypes_Required out = MutableSTypes_Required.fromFudgeMsg(new FudgeDeserializer(_fudgeContext), in.toFudgeMsg(new FudgeSerializer(_fudgeContext)));
     compareTypes (in, out);
   }
   

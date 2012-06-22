@@ -21,22 +21,38 @@ import javax.time.calendar.LocalDate;
 import javax.time.calendar.LocalDateTime;
 import javax.time.calendar.LocalTime;
 
-import org.fudgemsg.FudgeFieldContainer;
+import org.fudgemsg.FudgeMsg;
 
 public interface RSTypesBase {
-  public List<Boolean> get_Boolean ();
-  public List<Byte> get_Byte ();
-  public List<Double> get_Double ();
-  public List<Float> get_Float ();
-  public List<Boolean> get_Indicator ();
-  public List<Integer> get_Int ();
-  public List<Long> get_Long ();
-  public List<Short> get_Short ();
-  public List<String> get_String ();
-  public List<SubMessage> get_SubMessage ();
-  public List<CustomEnum> get_CustomEnum ();
-  public List<FudgeFieldContainer> get_Message ();
-  public List<LocalDate> get_Date ();
-  public List<LocalDateTime> get_DateTime ();
-  public List<LocalTime> get_Time ();
+
+  public List<Boolean> get_Boolean();
+
+  public List<Byte> get_Byte();
+
+  public List<Double> get_Double();
+
+  public List<Float> get_Float();
+
+  public List<Boolean> get_Indicator();
+
+  public List<Integer> get_Int();
+
+  public List<Long> get_Long();
+
+  public List<Short> get_Short();
+
+  public List<String> get_String();
+
+  public List<SubMessage> get_SubMessage();
+
+  public List<CustomEnum> get_CustomEnum();
+
+  public List<FudgeMsg> get_Message();
+
+  public List<LocalDate> get_Date();
+
+  public List<LocalDateTime> get_DateTime();
+
+  public List<LocalTime> get_Time();
+
 }

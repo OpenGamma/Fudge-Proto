@@ -15,7 +15,7 @@
 
 package org.fudgemsg.proto.tests;
 
-import org.fudgemsg.taxon.FudgeTaxonomy;
+import org.fudgemsg.taxonomy.FudgeTaxonomy;
 
 public abstract class ExternalTaxonomy implements FudgeTaxonomy {
   

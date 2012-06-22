@@ -18,7 +18,9 @@ package org.fudgemsg.proto;
 import static org.junit.Assert.assertEquals;
 
 import org.fudgemsg.FudgeContext;
-import org.fudgemsg.FudgeFieldContainer;
+import org.fudgemsg.FudgeMsg;
+import org.fudgemsg.mapping.FudgeDeserializer;
+import org.fudgemsg.mapping.FudgeSerializer;
 import org.fudgemsg.proto.tests.polymorphism.M1;
 import org.fudgemsg.proto.tests.polymorphism.M2;
 import org.fudgemsg.proto.tests.polymorphism.M3;
@@ -41,9 +43,9 @@ public class PolymorphismTest {
     m4.setFoo (m2);
     m4.setBar (m3);
     m4.setOther (m1);
-    FudgeFieldContainer c = m4.toFudgeMsg (FudgeContext.GLOBAL_DEFAULT);
+    FudgeMsg c = m4.toFudgeMsg(new FudgeSerializer(FudgeContext.GLOBAL_DEFAULT));
     System.out.println ("M4=" + c);
-    M4 m_out = M4.fromFudgeMsg (c);
+    M4 m_out = M4.fromFudgeMsg(new FudgeDeserializer(FudgeContext.GLOBAL_DEFAULT), c);
     assertEquals (M2.class, m_out.getFoo ().getClass ());
     assertEquals (M3.class, m_out.getBar ().getClass ());
     assertEquals (M1.class, m_out.getOther ().getClass ());
