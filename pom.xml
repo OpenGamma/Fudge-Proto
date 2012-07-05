@@ -9,7 +9,7 @@
   <artifactId>fudge-proto</artifactId>
   <packaging>jar</packaging>
   <name>Fudge Proto</name>
-  <version>0.3.9.1</version>
+  <version>0.3.9.2</version>
   <description>A code generator for the Fudge binary messaging system</description>
   <url>http://fudgemsg.org</url>
 
@@ -139,6 +139,7 @@
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
               <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
               <packageName>org.fudgemsg.proto</packageName>
+              <mainClass>org.fudgemsg.proto.CommandLine</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -153,6 +154,7 @@
             <link>http://download.oracle.com/javase/6/docs/api/</link>
           </links>
           <encoding>UTF-8</encoding>
+          <bottom>Copyright 2009-Present by OpenGamma Inc. and individual contributors, released under the Apache License Version 2.0</bottom>
         </configuration>
         <executions>
           <execution>
@@ -214,7 +216,7 @@
     <dependency>
       <groupId>org.fudgemsg</groupId>
       <artifactId>fudge-java</artifactId>
-      <version>0.3.9.1</version>
+      <version>0.3.9.2</version>
     </dependency>
     <dependency>
       <groupId>org.apache.ant</groupId>
@@ -265,6 +267,7 @@
             <link>http://download.oracle.com/javase/6/docs/api/</link>
           </links>
           <encoding>UTF-8</encoding>
+          <bottom>Copyright 2009-Present by OpenGamma Inc. and individual contributors, released under the Apache License Version 2.0</bottom>
         </configuration>
       </plugin>
       <plugin>
@@ -316,12 +319,11 @@
 
   <distributionManagement>
     <repository>
-      <id>opengamma</id>
+      <id>og-maven-repo-public</id>
       <name>OpenGamma maven repository</name>
-      <url>http://developers.opengamma.com/downloads/repo</url>
+      <url>${og-maven-repo-public.url}</url>
       <layout>default</layout>
     </repository>
-    <downloadUrl>http://developers.opengamma.com/downloads/repo</downloadUrl>
   </distributionManagement>
 
   <properties>
