@@ -71,14 +71,12 @@ import org.fudgemsg.wire.types.FudgeWireType;
   static final String CLASS_TOSTRINGBUILDER = "org.apache.commons.lang.builder.ToStringBuilder"; // string avoids dependency
   static final String CLASS_TOSTRINGSTYLE = "org.apache.commons.lang.builder.ToStringStyle"; // string avoids dependency
   static final String CLASS_SERIALIZABLE = java.io.Serializable.class.getName();
-  static final String CLASS_DATEPROVIDER = "javax.time.calendar.DateProvider";
-  static final String CLASS_DATE = "javax.time.calendar.LocalDate";
-  static final String CLASS_TIMEPROVIDER = "javax.time.calendar.TimeProvider";
-  static final String CLASS_TIME = "javax.time.calendar.LocalTime";
+  static final String CLASS_DATE = "org.threeten.bp.LocalDate";
+  static final String CLASS_TIME = "org.threeten.bp.LocalTime";
 
   static final String VALUE_INDICATOR = CLASS_INDICATOR + ".INSTANCE";
 
-  private static final String DEFAULT_DATETIME_TYPE = "javax.time.calendar.LocalDateTime=javax.time.calendar.DateTimeProvider/toLocalDateTime";
+  private static final String DEFAULT_DATETIME_TYPE = "org.threeten.bp.LocalDateTime=org.threeten.bp.LocalDateTime";
 
   private JavaClassCode() {
     super(new DocumentedClassCode(blockCodeDelegate(new JavaBlockCode(literalCodeDelegate(JavaLiteralCode.INSTANCE)))));
@@ -619,7 +617,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
     } else {
       switch (type.getFudgeFieldType()) {
         case FudgeWireType.DATE_TYPE_ID:
-          return source + ".toLocalDate ()";
+          return source;
         case FudgeWireType.DATETIME_TYPE_ID: {
           final String[] dt = getDateTimeTargetType(message);
           if (dt[2] != null) {
@@ -629,7 +627,7 @@ import org.fudgemsg.wire.types.FudgeWireType;
           }
         }
         case FudgeWireType.TIME_TYPE_ID:
-          return source + ".toLocalTime ()";
+          return source;
         default:
           return source;
       }
@@ -1423,8 +1421,8 @@ import org.fudgemsg.wire.types.FudgeWireType;
           break;
         }
         case FudgeWireType.DATE_TYPE_ID:
-          assignTo = writeDecodeSimpleFudgeField(writer, CLASS_DATEPROVIDER, fieldData, fieldRef,
-              fieldContainer, assignTo, appendTo, "toLocalDate ()");
+          assignTo = writeDecodeSimpleFudgeField(writer, CLASS_DATE, fieldData, fieldRef,
+              fieldContainer, assignTo, appendTo, null);
           break;
         case FudgeWireType.DATETIME_TYPE_ID: {
           final String[] dt = getDateTimeTargetType(message);
@@ -1437,8 +1435,8 @@ import org.fudgemsg.wire.types.FudgeWireType;
           break;
         }
         case FudgeWireType.TIME_TYPE_ID:
-          assignTo = writeDecodeSimpleFudgeField(writer, CLASS_TIMEPROVIDER, fieldData, fieldRef,
-              fieldContainer, assignTo, appendTo, "toLocalTime ()");
+          assignTo = writeDecodeSimpleFudgeField(writer, CLASS_TIME, fieldData, fieldRef,
+              fieldContainer, assignTo, appendTo, null);
           break;
         default:
           throw new IllegalStateException("type '" + type + "' is not an expected type (fudge field type "
@@ -2041,13 +2039,13 @@ import org.fudgemsg.wire.types.FudgeWireType;
         case FudgeWireType.STRING_TYPE_ID:
           return "String";
         case FudgeWireType.DATE_TYPE_ID:
-          return parameter ? CLASS_DATEPROVIDER : CLASS_DATE;
+          return CLASS_DATE;
         case FudgeWireType.DATETIME_TYPE_ID: {
           final String[] dt = getDateTimeTargetType(messageDefinition);
           return parameter ? dt[1] : dt[0];
         }
         case FudgeWireType.TIME_TYPE_ID:
-          return parameter ? CLASS_TIMEPROVIDER : CLASS_TIME;
+          return CLASS_TIME;
         default:
           throw new IllegalStateException("type '" + type + "' is not an expected type (fudge field type "
               + type.getFudgeFieldType() + ")");

@@ -15,11 +15,10 @@
  */
 package org.fudgemsg.proto.tests.types;
 
-import javax.time.calendar.LocalDate;
-import javax.time.calendar.LocalDateTime;
-import javax.time.calendar.LocalTime;
-
 import org.fudgemsg.FudgeMsg;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.LocalTime;
 
 public interface TypesBase_Optional {
 

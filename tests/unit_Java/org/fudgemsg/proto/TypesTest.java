@@ -23,11 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import javax.time.calendar.Clock;
-import javax.time.calendar.DateProvider;
-import javax.time.calendar.DateTimeProvider;
-import javax.time.calendar.TimeProvider;
-
 import org.fudgemsg.FudgeContext;
 import org.fudgemsg.FudgeMsg;
 import org.fudgemsg.MutableFudgeMsg;
@@ -62,6 +57,10 @@ import org.fudgemsg.proto.tests.types.SubMessage;
 import org.fudgemsg.proto.tests.types.TypesBase_Optional;
 import org.fudgemsg.proto.tests.types.TypesBase_Required;
 import org.junit.Test;
+import org.threeten.bp.Clock;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.LocalTime;
 
 public class TypesTest {
   
@@ -607,66 +606,66 @@ public class TypesTest {
     return r;
   }
   
-  private DateProvider sdate () {
-    return Clock.systemDefaultZone ().dateTime ();
+  private LocalDate sdate () {
+    return LocalDate.now (Clock.systemDefaultZone ());
   }
   
-  private DateProvider[] adate () {
+  private LocalDate[] adate () {
     final int n = arraySize ();
-    final DateProvider[] r = new DateProvider[n];
+    final LocalDate[] r = new LocalDate[n];
     for (int i = 0; i < n; i++) {
       r[i] = sdate ();
     }
     return r;
   }
   
-  private DateProvider[][] aadate () {
+  private LocalDate[][] aadate () {
     final int n = arraySize ();
-    final DateProvider[][] r = new DateProvider[n][];
+    final LocalDate[][] r = new LocalDate[n][];
     for (int i = 0; i < n; i++) {
       r[i] = adate ();
     }
     return r;
   }
   
-  private DateTimeProvider sdatetime () {
-    return Clock.systemDefaultZone ().dateTime ();
+  private LocalDateTime sdatetime () {
+    return LocalDateTime.now (Clock.systemDefaultZone ());
   }
   
-  private DateTimeProvider[] adatetime () {
+  private LocalDateTime[] adatetime () {
     final int n = arraySize ();
-    final DateTimeProvider[] r = new DateTimeProvider[n];
+    final LocalDateTime[] r = new LocalDateTime[n];
     for (int i = 0; i < n; i++) {
       r[i] = sdatetime ();
     }
     return r;
   }
   
-  private DateTimeProvider[][] aadatetime () {
+  private LocalDateTime[][] aadatetime () {
     final int n = arraySize ();
-    final DateTimeProvider[][] r = new DateTimeProvider[n][];
+    final LocalDateTime[][] r = new LocalDateTime[n][];
     for (int i = 0; i < n; i++) {
       r[i] = adatetime ();
     }
     return r;
   }
   
-  private TimeProvider stime () {
-    return Clock.systemDefaultZone ().dateTime ();
+  private LocalTime stime () {
+    return LocalTime.now (Clock.systemDefaultZone ());
   }
   
-  private TimeProvider[] atime () {
+  private LocalTime[] atime () {
     final int n = arraySize ();
-    final TimeProvider[] r = new TimeProvider[n];
+    final LocalTime[] r = new LocalTime[n];
     for (int i = 0; i < n; i++) {
       r[i] = stime ();
     }
     return r;
   }
   
-  private TimeProvider[][] aatime () {
+  private LocalTime[][] aatime () {
     final int n = arraySize ();
-    final TimeProvider[][] r = new TimeProvider[n][];
+    final LocalTime[][] r = new LocalTime[n][];
     for (int i = 0; i < n; i++) {
       r[i] = atime ();
     }
