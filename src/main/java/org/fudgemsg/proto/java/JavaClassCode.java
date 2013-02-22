@@ -15,8 +15,10 @@
  */
 package org.fudgemsg.proto.java;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -117,8 +119,14 @@ import org.fudgemsg.wire.types.FudgeWireType;
     writer = beginBlock(writer); // class definition
     final String bodyCode = ProtoBinding.BODY.get(definition);
     if (bodyCode != null) {
-      writer.getWriter().write(bodyCode);
-      writer.getWriter().newLine();
+      BufferedReader r = new BufferedReader(new StringReader(bodyCode));
+      String line = r.readLine();
+      while (line != null) {
+        writer.getWriter().write(line);
+        writer.getWriter().newLine();
+        line = r.readLine();
+      }
+      r.close();
     }
     return writer;
   }
@@ -1953,8 +1961,14 @@ import org.fudgemsg.wire.types.FudgeWireType;
     }
     final String bodyCode = ProtoBinding.BODY.get(enumDefinition);
     if (bodyCode != null) {
-      writer.write(bodyCode);
-      writer.newLine();
+      BufferedReader r = new BufferedReader(new StringReader(bodyCode));
+      String line = r.readLine();
+      while (line != null) {
+        writer.write(line);
+        writer.newLine();
+        line = r.readLine();
+      }
+      r.close();
     }
     endBlock(writer); // enum
   }
