@@ -9,7 +9,7 @@
   <artifactId>fudge-proto</artifactId>
   <packaging>jar</packaging>
   <name>Fudge Proto</name>
-  <version>0.3.9.4</version>
+  <version>0.3.9.5</version>
   <description>A code generator for the Fudge binary messaging system</description>
   <url>http://fudgemsg.org</url>
 
