@@ -7,7 +7,7 @@
 	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.6/commons-codec-1.6.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/opengamma/external/json/json/1.0.0.v20101106/json-1.0.0.v20101106.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/threeten/threetenbp/0.7/threetenbp-0.7.jar" sourcepath="/M2_REPO/org/threeten/threetenbp/0.7/threetenbp-0.7-sources.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/threeten/threetenbp/0.8/threetenbp-0.8.jar" sourcepath="/M2_REPO/org/threeten/threetenbp/0.8/threetenbp-0.8-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/net/sf/scannotation/scannotation/1.0.2/scannotation-1.0.2.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javassist/javassist/3.6.0.GA/javassist-3.6.0.GA.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/ant/ant/1.7.1/ant-1.7.1.jar"/>
